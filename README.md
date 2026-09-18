@@ -415,8 +415,9 @@ and the cost (free on Spark or Pages).
 light from Accessories onward; the six repairs become one interactive list with
 a sticky image stage that follows your pointer, each row opening WhatsApp with
 that repair pre-written; the hero is a full-bleed photograph rather than a split;
-accessories sit on a horizontal snap rail; and the logo sits on a white plate
-wherever the ground is dark, so the supplied artwork is never recoloured.
+accessories sit on a horizontal snap rail; and the logo uses a reversed lockup
+on dark grounds (white M and "MOBILE", red W and "WORLD" unchanged) rather than
+a white box, generated from your file without touching a single path.
 
 ### Comparing them locally
 

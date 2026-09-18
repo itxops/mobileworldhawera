@@ -77,12 +77,31 @@ desktop set.
 | Reviews | sliding row on light | sliding row on light (unchanged — it worked) |
 | FAQ | single column | two columns |
 
-### The logo is not touched
+### The logo uses a reversed lockup, not a white box
 
 The supplied artwork has a charcoal "M" and "MOBILE" that would disappear on a
-dark header. Rather than recolour a mark that is not ours to change, it sits on
-a **white plate** in the header, drawer and footer. The SVG is byte-identical to
-version 1's.
+dark header. The first attempt put it on a white plate; that read as a sticker
+floating on black, so it was replaced with a proper **reversed lockup** —
+`assets/logo/logo-reverse.svg`, used in the header, drawer and footer.
+
+It is generated from the supplied file by swapping two fill values, and the
+build **fails** if either the path data or the red changes:
+
+| Element | Original | Reversed |
+|---|---|---|
+| M + "MOBILE" | `#2b2b2b` | `#ffffff` |
+| "Hawera" | `#a8a8a8` | `#bdbdc6` |
+| W + "WORLD" | `#ef3b36` | `#ef3b36` — unchanged |
+
+No path data differs, so letterforms, kerning, spacing and proportions are
+identical to what you supplied. "Hawera" goes to a light grey rather than pure
+white on purpose: in the original it sits clearly below the charcoal, and
+`#bdbdc6` keeps that same step down instead of flattening both into one weight.
+
+`logo.svg` and `mw-mark.svg` are still in the folder, unmodified, as the
+light-background masters — and the `logo` field in the structured data points
+at the **original**, because search engines render it on their own white
+surface.
 
 ---
 

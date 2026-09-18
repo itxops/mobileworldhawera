@@ -8,8 +8,9 @@
      - the page alternates dark and light bands instead of running light throughout
      - services are one interactive list with a sticky image stage, not a card grid
      - accessories sit on a horizontal snap rail, not a grid
-     - the logo sits on a white plate wherever the ground is dark, so the
-       supplied artwork is never recoloured
+     - the logo uses a reversed lockup on dark grounds (assets/logo/
+       logo-reverse.svg) rather than a plate behind the original: same paths,
+       same red, charcoal and grey knocked out
 
    Contents
      1.  Fonts
@@ -343,21 +344,25 @@ h1, h2, h3, h4 {
   gap: 1.5rem;
 }
 
-/* The supplied logo has a charcoal "M"/"MOBILE" that would vanish on a dark
-   ground. Rather than recolour artwork that is not ours to change, it sits on
-   a white plate — the mark itself is untouched. */
-.logo-plate {
+/* On a dark ground the logo uses the reversed lockup (logo-reverse.svg): the
+   charcoal M/"MOBILE" knocked out to white and "Hawera" to a light grey, with
+   the red W/"WORLD" left at its original #ef3b36. No path data differs from
+   the supplied file — letterforms, spacing and proportions are identical.
+
+   There is deliberately no plate, panel or box behind it, so the hero
+   photograph runs behind the header without interruption. */
+.brand {
   display: flex;
   align-items: center;
-  padding: 0.46rem 0.75rem;
-  background: #fff;
-  border-radius: 11px;
-  box-shadow: 0 2px 14px -4px rgba(0, 0, 0, 0.5);
-  transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+  transition: opacity var(--t-fast) var(--ease);
 }
-.logo-plate:hover { transform: translateY(-1px); box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.55); }
-.logo-plate img { width: auto; height: 26px; }
-.header.is-stuck .logo-plate img { height: 23px; }
+.brand img {
+  width: auto;
+  height: 30px;
+  transition: height var(--t) var(--ease);
+}
+.brand:hover { opacity: 0.82; }
+.header.is-stuck .brand img { height: 26px; }
 
 .nav { display: flex; align-items: center; gap: 0.35rem; margin-left: auto; }
 .nav a {
@@ -1178,8 +1183,8 @@ a.info-row:hover .info-ic { background: var(--red-btn); border-color: transparen
   grid-template-columns: 1.4fr 0.8fr 1fr 1.35fr;
   gap: clamp(1.8rem, 3vw, 3rem);
 }
-.footer-brand .logo-plate { display: inline-flex; margin-bottom: 1.1rem; }
-.footer-brand .logo-plate img { height: 30px; }
+.footer-brand .brand { display: inline-flex; margin-bottom: 1.25rem; }
+.footer-brand .brand img { height: 34px; }
 .f-tag {
   font-family: var(--font-display);
   font-size: 0.68rem;
