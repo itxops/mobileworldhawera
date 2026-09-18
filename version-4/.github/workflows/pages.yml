@@ -2,7 +2,7 @@
 #
 # This file is inert in the main mobileworldhawera repo — GitHub only reads
 # workflows from .github/workflows/ at the REPOSITORY ROOT, and there this
-# lives under version-2/. It becomes the root workflow in the version 2 repo,
+# lives under version-4/. It becomes the root workflow in the version 4 repo,
 # which is pushed with:
 #
 #   git subtree push --prefix=version-4 v4 main
