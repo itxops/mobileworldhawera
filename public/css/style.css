@@ -788,9 +788,11 @@ body.nav-open { overflow: hidden; }
 }
 
 .brand-chip {
-  display: grid;
-  place-items: center;
-  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-width: 160px;
   min-height: 70px;
   padding: 0.9rem 1.6rem;
   border-radius: var(--radius);
@@ -804,7 +806,14 @@ body.nav-open { overflow: hidden; }
   flex: none;
   transition: border-color var(--t) var(--ease), color var(--t) var(--ease), transform var(--t) var(--ease);
 }
+.brand-chip svg {
+  width: 22px; height: 22px;
+  flex: none;
+  opacity: 0.8;
+  transition: opacity var(--t) var(--ease);
+}
 .brand-chip:hover { border-color: var(--accent-text); color: var(--accent-text); transform: translateY(-3px); }
+.brand-chip:hover svg { opacity: 1; }
 
 .brand-note {
   margin-top: 1.5rem;
@@ -911,14 +920,12 @@ body.nav-open { overflow: hidden; }
 .device-card p { color: var(--dim); font-size: 0.95rem; }
 
 /* --- repair service card --- */
-.svc-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.75rem 1.6rem;
-}
-.svc-card h3 { font-size: 1.1rem; letter-spacing: -0.02em; }
-.svc-card p { font-size: 0.92rem; color: var(--dim); line-height: 1.62; }
+.svc-card .card-media { aspect-ratio: 16 / 9; }
+.svc-card .card-body { padding: 1.35rem 1.4rem 1.55rem; }
+.svc-card .c-icon { width: 46px; height: 46px; border-radius: 13px; margin-top: -2.9rem; }
+.svc-card .c-icon svg { width: 23px; height: 23px; }
+.svc-card h3 { font-size: 1.06rem; letter-spacing: -0.02em; }
+.svc-card p { font-size: 0.9rem; color: var(--dim); line-height: 1.6; }
 
 /* --- benefit card (Why choose us) --- */
 .benefit {
@@ -953,6 +960,8 @@ body.nav-open { overflow: hidden; }
   background: var(--surface-2);
 }
 .split-media img { width: 100%; height: 100%; object-fit: cover; }
+/* keep a split photo from towering over the column beside it */
+.split-media { max-height: 460px; }
 
 .media-plaque {
   position: absolute;
@@ -1223,7 +1232,7 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
   gap: 1rem;
   color: var(--dim);
 }
-.hours-list li span:last-child { color: var(--fg); font-weight: 600; }
+.hours-list li span:last-child { color: var(--fg); font-weight: 600; white-space: nowrap; }
 
 /* ==========================================================================
    15. CTA band

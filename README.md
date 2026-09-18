@@ -77,22 +77,16 @@ Three things were handled differently, and you should know why:
 |---|---|---|
 | **"5.0 rating on Google"** | Replaced with a **"Read our Google reviews"** pill that links to your Google listing. | A star rating is a verifiable claim about a specific location. Until the Hawera listing has that rating, publishing it would be inaccurate and Google can penalise it. Once Hawera has its own rating, change the pill text back — it is one line in `index.html`. |
 | **Customer reviews** | All nine are reproduced word for word, under the line *"Reviews left for our Mobile World stores on Google."* | They are genuine reviews of your business, so they are yours to show — but they were left for Alexandra, so the page says "our Mobile World stores" rather than implying they are Hawera reviews. |
-| **Opening hours** | Carried across as **Open daily, 9:30am – 5:30pm, 7 days**. | These are Alexandra's hours. **Please confirm they are right for Hawera before going live** — see below. |
+| **Opening hours** | **Mon – Sun, 9:30am – 5:30pm**, confirmed by the owner as the same as Alexandra. Shown in the footer and the contact section, and published in the structured data. | Confirmed — no longer a placeholder. |
 
-### Confirm the opening hours
+### Changing the opening hours
 
-In `index.html`, find:
+They appear in **three** places, and all three must agree:
 
-```html
-<ul class="hours-list">
-  <li><span>Open daily</span><span>9:30am – 5:30pm</span></li>
-  <li><span>Open 7 days a week</span><span></span></li>
-</ul>
-```
-
-Adjust if Hawera differs. Then add the matching `openingHoursSpecification` to
-the `LocalBusiness` structured data in the `<head>` so Google shows the hours in
-search results:
+1. The footer of every page — `<ul class="hours-list">`
+2. The contact section of `index.html` — same markup
+3. The `openingHoursSpecification` in the `LocalBusiness` JSON-LD in each
+   `<head>`, which is what Google reads:
 
 ```json
 "openingHoursSpecification": [
@@ -299,24 +293,31 @@ ratio changes.
 
 ---
 
-## 11. Images and licensing
+## 11. Images, logos and licensing
 
-All 11 photographs are free stock images from **Pexels**, used under the
+**Photographs — 17 of them.** All free stock from **Pexels**, used under the
 [Pexels licence](https://www.pexels.com/license/): free for commercial use, no
 attribution required, no fee, no expiry. The source URL for every single file is
-listed in `public/images/CREDITS.md`, so any of them can be checked.
+listed in `public/images/CREDITS.md`.
+
+Every image lives in a card or band: the hero, three device categories, all six
+repair services, the workshop shot, five accessory categories, and the closing
+banner.
 
 **On trademarks.** The licence covers copyright, but a brand logo *inside* a
-photo is a separate issue. So every candidate was opened and looked at before
-use, and anything showing a manufacturer's name or logo was rejected — JBL,
-Bose, Marshall, Sony and MIVI speakers, and Apple-branded earbuds and cases all
-got binned. No manufacturer's own product photography was used, and nothing was
-taken from another repair business.
+photo is a separate issue, so every candidate was opened and looked at before
+use. Rejected: JBL, Bose, Marshall, Sony and MIVI speakers; Apple-branded
+earbuds and cases; phone screens showing Chrome, WhatsApp, Facebook or Instagram
+icons; and a battery shot that caught a laptop full of app icons in frame.
 
-The only brand names on the site are the plain text chips in the "Brands we
-repair" row, which carry a note stating that Mobile World Hawera is an
-independent repair store and is not an authorised service centre for, or
-affiliated with, any of those manufacturers.
+**Brand logos in the marquee.** The six marks come from
+[Simple Icons](https://simpleicons.org) under **CC0-1.0** — the icon files are
+public domain, so there is no copyright question. The trademarks themselves
+still belong to Apple, Samsung, Huawei, Oppo, Vivo and Google; they are used
+only to identify which devices the shop repairs, which is ordinary nominative
+use. The note under the marquee says exactly that, and the logos are drawn in a
+single flat colour rather than each brand's official colours, which keeps clear
+of brand style guidelines. Removing one is a single line in `index.html`.
 
 ## 12. Clean URLs (optional)
 
