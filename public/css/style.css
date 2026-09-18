@@ -1348,11 +1348,23 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
 /* Contact rows reuse the icon-row idea from the rest of the page, which also
    lets the opening hours sit on the same rail as everything else instead of
    floating in a bordered box of their own. */
-.f-list { display: grid; gap: 0.7rem; }
+/* Qualified with .footer-col so it out-ranks ".footer-col ul { gap: 0.15rem }",
+   which was collapsing these rows to a 2px gap. */
+.footer-col ul.f-list { display: grid; gap: 0.95rem; }
 .f-list li { font-size: 0.9rem; color: var(--muted-ink); line-height: 1.55; }
 /* Two classes deep so this out-ranks the generic .footer-col ul a rule, which
    would otherwise force the linked rows to inline-block and stack the icon. */
 .f-list .f-row { display: flex; align-items: flex-start; gap: 0.7rem; padding-block: 0; }
+/* The text block is never shorter than the icon and centres its content, so a
+   one-line row sits on the icon's midline while a two-line row still starts at
+   the top — one rule that keeps every row on the same rhythm. */
+.f-list .f-row > span:last-child {
+  min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
 .f-list a.f-row { transition: color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
 .f-list a.f-row:hover { color: var(--red-ink); transform: none; }
 .f-list a.f-row:hover .f-icon { background: var(--red-grad); border-color: transparent; color: #fff; }

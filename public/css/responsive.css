@@ -130,7 +130,9 @@
   .split { gap: 3.5rem; }
   .cta-band-inner { padding: 4rem 3.25rem; max-width: 64%; }
 
-  .footer-top { grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: 2.5rem; }
+  /* Explore is short links; Visit & Contact carries the email and the hours
+     on single lines, so it gets the width instead. */
+  .footer-top { grid-template-columns: 1.3fr 0.75fr 0.95fr 1.5fr; gap: 2.5rem; }
   .footer-brand { grid-column: auto; }
 
   /* connector rule linking the four process steps */
