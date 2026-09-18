@@ -1,0 +1,55 @@
+# Publishes the contents of public/ to GitHub Pages.
+#
+# This file is inert in the main mobileworldhawera repo — GitHub only reads
+# workflows from .github/workflows/ at the REPOSITORY ROOT, and there this
+# lives under version-2/. It becomes the root workflow in the version 2 repo,
+# which is pushed with:
+#
+#   git subtree push --prefix=version-2 v2 main
+#
+# If it does nothing on the first run, Pages has not been switched on yet:
+#   Settings -> Pages -> Build and deployment -> Source -> "GitHub Actions"
+#
+# Once enabled the demo is live at
+#   https://itxops.github.io/-itxops-MWhawera-v3/
+name: Deploy version 3 to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Create the Pages site on the first run instead of failing when it
+          # has never been switched on. This needs the repo's workflow
+          # permissions set to read+write (Settings -> Actions -> General ->
+          # Workflow permissions). If it still fails, enable Pages by hand
+          # under Settings -> Pages and set Source to "GitHub Actions".
+          enablement: true
+      - name: Upload public/ as the site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

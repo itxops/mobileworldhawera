@@ -5,9 +5,10 @@
 
    Routes
        /            a chooser page
-       /compare     both versions in two iframes, at a width you can drag
+       /compare     two versions side by side, switchable, at a width you can drag
        /v1/         version 1  (public/)
        /v2/         version 2  (version-2/public/)
+       /v3/         version 3  (version-3/public/)
 
    Uses only Node's own modules — nothing to install, and it never touches the
    network. This is a preview tool for the desktop; it is not what gets
@@ -24,6 +25,7 @@ const PORT = Number(process.env.PORT) || 5173;
 const ROOTS = {
   v1: path.join(ROOT, 'public'),
   v2: path.join(ROOT, 'version-2', 'public'),
+  v3: path.join(ROOT, 'version-3', 'public'),
 };
 
 const TYPES = {
@@ -86,6 +88,7 @@ const shell = (title, body) => `<!doctype html>
   .t1 { background: rgba(221,49,45,.15); color: #ff6b63; }
   .t2 { background: rgba(80,140,255,.15); color: #7aa7ff; }
   .t3 { background: rgba(255,255,255,.08); color: #bbb; }
+  .t4 { background: rgba(52,199,123,.16); color: #5fd79b; }
   footer { margin-top: 3rem; color: #6d6d78; font-size: .84rem; }
   code { background: #17171c; padding: .15rem .4rem; border-radius: 5px; color: #d0d0d8; }
 </style></head><body>${body}</body></html>`;
@@ -108,11 +111,17 @@ const indexPage = () => shell('Mobile World Hawera — preview', `
       <p>Dark top half, light bottom half. Services as one interactive list with a
          sticky image stage; accessories on a scrolling rail.</p>
     </a>
+    <a class="card" href="/v3/">
+      <span class="tag t4">Version 3</span>
+      <h2>The fresh one</h2>
+      <p>Built mobile-first from scratch after both earlier designs were rejected.
+         Start here.</p>
+    </a>
     <a class="card" href="/compare">
-      <span class="tag t3">Both</span>
+      <span class="tag t3">Compare</span>
       <h2>Side by side</h2>
-      <p>Two frames, scroll each independently, drag the divider. Handy for
-         checking the same section in both.</p>
+      <p>Any two versions in two frames, switchable, scroll each independently,
+         drag the divider.</p>
     </a>
   </div>
   <footer>Stop the server with <code>Ctrl + C</code> in the terminal.</footer>
@@ -138,9 +147,13 @@ const comparePage = () => shell('Side by side', `
   .panes { display: flex; flex: 1; min-height: 0; }
   .pane { display: flex; flex-direction: column; min-width: 0; flex: 1; }
   .pane h2 {
-    margin: 0; padding: .4rem .8rem; font-size: .72rem; letter-spacing: .14em;
-    text-transform: uppercase; color: #9a9aa4; background: #131318;
+    margin: 0; padding: .3rem .6rem; background: #131318;
     border-bottom: 1px solid #2a2a33;
+  }
+  .pane h2 select {
+    font: inherit; font-size: .8rem; color: #ddd; background: #1d1d24;
+    border: 1px solid #33333d; border-radius: 6px; padding: .25rem .4rem;
+    max-width: 100%;
   }
   .pane iframe { flex: 1; width: 100%; border: 0; background: #fff; }
   .split { width: 6px; cursor: col-resize; background: #2a2a33; flex: none; }
@@ -155,15 +168,37 @@ const comparePage = () => shell('Side by side', `
   <button type="button" data-w="0">Fill</button>
 </div>
 <div class="panes">
-  <div class="pane" id="p1"><h2>Version 1 — light &amp; clean</h2><iframe src="/v1/" title="Version 1"></iframe></div>
+  <div class="pane" id="p1">
+    <h2><select data-pane="p1">
+      <option value="/v1/">Version 1 — light &amp; clean</option>
+      <option value="/v2/">Version 2 — workshop</option>
+      <option value="/v3/" selected>Version 3 — the fresh one</option>
+    </select></h2>
+    <iframe src="/v3/" title="Left pane"></iframe>
+  </div>
   <div class="split" id="split"></div>
-  <div class="pane" id="p2"><h2>Version 2 — workshop</h2><iframe src="/v2/" title="Version 2"></iframe></div>
+  <div class="pane" id="p2">
+    <h2><select data-pane="p2">
+      <option value="/v1/">Version 1 — light &amp; clean</option>
+      <option value="/v2/" selected>Version 2 — workshop</option>
+      <option value="/v3/">Version 3 — the fresh one</option>
+    </select></h2>
+    <iframe src="/v2/" title="Right pane"></iframe>
+  </div>
 </div>
 <script>
   var p1 = document.getElementById('p1');
   var p2 = document.getElementById('p2');
   var split = document.getElementById('split');
   var dragging = false;
+
+  // each pane picks which version it shows
+  Array.prototype.forEach.call(document.querySelectorAll('select[data-pane]'), function (sel) {
+    sel.addEventListener('change', function () {
+      document.getElementById(sel.getAttribute('data-pane'))
+        .querySelector('iframe').src = sel.value;
+    });
+  });
 
   split.addEventListener('mousedown', function () { dragging = true; document.body.style.userSelect = 'none'; });
   window.addEventListener('mouseup', function () { dragging = false; document.body.style.userSelect = ''; });
@@ -198,7 +233,7 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/') return send(res, 200, TYPES['.html'], indexPage());
   if (pathname === '/compare') return send(res, 200, TYPES['.html'], comparePage());
 
-  const m = pathname.match(/^\/(v1|v2)(\/.*)?$/);
+  const m = pathname.match(/^\/(v1|v2|v3)(\/.*)?$/);
   if (!m) return send(res, 404, 'text/plain', 'Not found. Try / or /compare');
 
   const base = ROOTS[m[1]];

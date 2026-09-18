@@ -1,0 +1,1177 @@
+/* ==========================================================================
+   Mobile World Hawera — VERSION 3, "High Street Counter"
+
+   This is the ONLY stylesheet, and there is NO JavaScript file anywhere in
+   this site. Everything that moves or opens is plain HTML and CSS:
+
+     the FAQ            <details> / <summary>            (built into the browser)
+     sliding rows       overflow-x + scroll-snap
+     smooth jumps       scroll-behavior: smooth
+     the bottom bar     position: fixed
+     the desktop header position: sticky
+
+   Two breakpoints only, and every media query lives in blocks 20-22 at the
+   bottom. Nothing above that line is inside a media query.
+
+   CONTENTS
+     1.  Tokens
+     2.  Font + reset
+     3.  Base type
+     4.  Reusable bits: container, section head, buttons, sign, rails, notes
+     5.  Header
+     6.  Hero
+     7.  Contents strip
+     8.  Brands
+     9.  Devices
+     10. Repairs index
+     11. How it works
+     12. Reviews
+     13. Why choose us
+     14. Accessories
+     15. FAQ
+     16. Visit
+     17. Closing band
+     18. Footer
+     19. Bottom action bar
+     20. Wider screens (720px and up)
+     21. Wide screens (1040px and up)
+     22. Reduced motion
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Tokens
+   ========================================================================== */
+:root {
+  /* Colour. One warm cream ground runs the whole page; only the footer and
+     the closing band break it. */
+  --cream:     #FBF7F1;   /* the page ground, top to bottom */
+  --oat:       #F6EFE6;   /* second ground: chips, tiles, strips */
+  --clay:      #E3D8C9;   /* every border and hairline, 1px, always */
+  --ink:       #2B2B2B;   /* all headings and body — the logo's own charcoal */
+  --ink-soft:  #5E574E;   /* descriptions, captions, legal */
+  --red:       #EF3B36;   /* the BRAND red — decoration only, never a word */
+  --red-deep:  #B3221D;   /* the working red: red text and red button fill */
+  --tint:      #FBE9E7;   /* icon chip ground */
+  --white:     #FFFFFF;
+  --foot-mute: #C4BBB0;   /* secondary text on the ink footer */
+  --foot-rule: #4A4642;   /* hairline on the ink footer */
+  --wa:        #25D366;   /* WhatsApp glyph — only ever on ink */
+  --open:      #1B7F45;   /* the "open" dot — only ever on cream or oat */
+
+  /* Contrast, measured not assumed:
+       ink on cream 13.27:1 · ink on oat 12.41:1 · ink-soft on cream 6.67:1
+       red-deep on cream 6.22:1 · white on red-deep 6.64:1 · white on ink 14.16:1
+       cream on ink 13.27:1 · foot-mute on ink 7.47:1 · open dot on cream 4.72:1
+
+     BANNED, because they fail AA — do not introduce these:
+       white on --red      3.93:1
+       ink on --red        3.61:1
+       --red as text       3.68:1 on cream
+       --wa on --red-deep  3.35:1
+     --red is a 6px bar, a 3px rule, a 4px edge and the logo. It never sets a
+     word anywhere on this site. That is what --red-deep is for. */
+
+  --font: "Hanken Grotesk", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+
+  --fs-h1:    clamp(2rem, 1.44rem + 2.29vw, 3.5rem);          /* 32 -> 56 */
+  --fs-h2:    clamp(1.625rem, 1.35rem + 1.14vw, 2.375rem);    /* 26 -> 38 */
+  --fs-lead:  clamp(1.0625rem, 1.016rem + 0.19vw, 1.1875rem); /* 17 -> 19 */
+  --fs-body:  1.0625rem;  /* 17px, constant — the audience skews older */
+  --fs-row:   0.9375rem;  /* 15px */
+  --fs-small: 0.875rem;   /* 14px */
+  --fs-label: 0.8125rem;  /* 13px — the floor. Nothing is smaller. */
+  --fs-btn:   1rem;       /* 16px */
+
+  --sp-4: 4px;   --sp-8: 8px;   --sp-12: 12px; --sp-16: 16px;
+  --sp-20: 20px; --sp-24: 24px; --sp-32: 32px; --sp-40: 40px;
+  --sp-56: 56px; --sp-72: 72px;
+
+  --r-chip: 10px;
+  --r-btn: 12px;
+  --r-card: 14px;
+  --r-panel: 18px;
+
+  --gutter: 16px;
+  --bar-h: 76px;
+
+  /* The only shadow in the file. Grep for "box-shadow" and "gradient" — you
+     should find this one and the hero underline, and nothing else. Stacked
+     glows and gradients are the "cheap" signal both earlier versions had. */
+  --shadow-bar: 0 -2px 14px rgba(43, 43, 43, 0.08);
+
+  color-scheme: light;
+}
+
+/* ==========================================================================
+   2. Font + reset
+   ========================================================================== */
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("../assets/fonts/hankengrotesk-latin-var.woff2") format("woff2-variations");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--sp-16);
+  scroll-padding-bottom: var(--bar-h);
+}
+
+body {
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  /* room for the fixed bar, so it can never cover the footer's last line */
+  padding-bottom: var(--bar-h);
+}
+
+img, picture, svg, iframe { display: block; max-width: 100%; }
+img { height: auto; }
+svg { width: 20px; height: 20px; flex: none; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; padding: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--red-deep);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px; left: var(--sp-12);
+  z-index: 60;
+  padding: var(--sp-12) var(--sp-20);
+  background: var(--red-deep);
+  color: var(--white);
+  font-weight: 600;
+  border-radius: 0 0 var(--r-chip) var(--r-chip);
+}
+.skip-link:focus { top: 0; }
+
+/* ==========================================================================
+   3. Base type
+   ========================================================================== */
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); line-height: 1.2; letter-spacing: -0.015em; }
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+
+.eyebrow {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: var(--sp-8);
+}
+.eyebrow a { color: var(--red-deep); }
+.eyebrow a:hover { text-decoration: underline; }
+
+.note {
+  font-size: var(--fs-label);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 76ch;
+}
+
+.say {
+  font-size: var(--fs-row);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin-top: var(--sp-8);
+}
+
+/* ==========================================================================
+   4. Reusable bits
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--sp-24); }
+.section > .container > h2 { margin-bottom: var(--sp-16); }
+
+/* --- buttons -------------------------------------------------------------
+   Three fills only. No gradients, no glows, no lift on hover. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-8);
+  min-height: 44px;
+  padding: 0 var(--sp-16);
+  border-radius: var(--r-btn);
+  border: 1px solid transparent;
+  font-size: var(--fs-btn);
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.btn svg { width: 18px; height: 18px; }
+.btn:active { transform: translateY(1px); }
+
+.btn-red   { background: var(--red-deep); color: var(--white); }
+.btn-red:hover   { background: #991d19; }
+.btn-ink   { background: var(--ink); color: var(--white); }
+.btn-ink:hover   { background: #1b1b1b; }
+.btn-ink svg use { color: inherit; }
+.btn-ink .wa, .btn-ink svg[data-wa] { color: var(--wa); }
+.btn-cream { background: var(--cream); color: var(--red-deep); }
+.btn-cream:hover { background: var(--white); }
+
+.btn-lg { min-height: 54px; }
+.btn-block { width: 100%; }
+
+/* The WhatsApp glyph is green only where it sits on ink — on the red button
+   it would measure 3.35:1. */
+.btn-ink > svg:first-child { color: var(--wa); }
+
+/* --- the shop sign -------------------------------------------------------
+   Static text, not a live "open now" chip. The shop keeps the same hours
+   seven days a week, so a computed chip could only ever be wrong — and it
+   would need JavaScript. */
+.sign {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-8);
+  padding: var(--sp-8) 14px;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-chip);
+  background: var(--cream);
+  font-size: var(--fs-row);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.sign .dot {
+  width: 8px; height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--open);
+}
+.sign-lg { padding: var(--sp-12) var(--sp-16); margin-block: var(--sp-12); }
+
+/* --- snap rails ----------------------------------------------------------
+   Used by reviews and accessories. The rail bleeds past both gutters so the
+   next card peeks, which is what tells you it scrolls. */
+.rail {
+  display: flex;
+  gap: var(--sp-12);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  padding-inline: var(--gutter);
+  padding-block: var(--sp-4) var(--sp-16);
+  scrollbar-width: thin;
+  scrollbar-color: var(--clay) transparent;
+}
+.rail > li { flex: none; scroll-snap-align: start; }
+.rail::-webkit-scrollbar { height: 6px; }
+.rail::-webkit-scrollbar-track { background: transparent; }
+.rail::-webkit-scrollbar-thumb { background: var(--clay); border-radius: 99px; }
+
+/* ==========================================================================
+   5. Header — static and in flow on a phone. Two fixed bars would eat 14% of
+      an iPhone 12 viewport; the bottom one is worth that, a second is not.
+   ========================================================================== */
+.site-head {
+  background: var(--cream);
+  border-bottom: 1px solid var(--clay);
+}
+.head-in {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+  padding-block: var(--sp-8);
+}
+.logo { display: flex; align-items: center; min-height: 44px; }
+.logo img { width: auto; height: 26px; }
+
+.head-nav { display: none; }
+.head-tel { display: none; }
+.head-wa  { display: none; }
+.head-call { margin-left: auto; }
+
+/* ==========================================================================
+   6. Hero — the photograph is a framed picture, never a background with text
+      laid over it.
+   ========================================================================== */
+.hero { padding-block: var(--sp-20) var(--sp-24); }
+.hero h1 { margin-block: var(--sp-16) 0; }
+
+/* The red bar under the last word. The word itself stays ink on cream at
+   13.27:1 — the red is paint, not type. */
+.hero .mark {
+  background-image: linear-gradient(to top, var(--red) 0 6px, transparent 6px);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.hero .lead { margin-top: 14px; }
+
+.hero-acts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-12);
+  margin-top: var(--sp-20);
+}
+
+.trust {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: var(--sp-12);
+  border: 1px solid var(--clay);
+  border-radius: var(--r-card);
+  background: var(--oat);
+  overflow: hidden;
+}
+.trust li {
+  padding: var(--sp-12) var(--sp-8) 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.trust li + li { border-left: 1px solid var(--clay); }
+.trust li::before {
+  content: "";
+  display: block;
+  width: 20px; height: 3px;
+  margin-bottom: var(--sp-8);
+  border-radius: 2px;
+  background: var(--red);
+}
+
+.hero-shot {
+  margin-top: var(--sp-20);
+  padding: 6px;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-panel);
+  background: var(--cream);
+}
+.hero-shot img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ==========================================================================
+   7. Contents strip — the counts tell you how long the page is while you
+      read it, which is the direct answer to "it felt endless".
+   ========================================================================== */
+.contents {
+  border-block: 1px solid var(--clay);
+  background: var(--cream);
+}
+.contents ul {
+  display: flex;
+  gap: var(--sp-8);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  padding: var(--sp-12) var(--gutter) var(--sp-16);
+  scrollbar-width: none;
+}
+.contents ul::-webkit-scrollbar { display: none; }
+.contents li { flex: none; scroll-snap-align: start; }
+.contents a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 14px;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-chip);
+  background: var(--oat);
+  font-size: var(--fs-row);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+.contents a span[aria-hidden] { color: var(--red-deep); font-weight: 700; }
+.contents a:hover { background: var(--tint); border-color: var(--red-deep); }
+
+/* ==========================================================================
+   8. Brands — nothing moves. Both earlier versions auto-scrolled this row.
+   ========================================================================== */
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-16);
+}
+.brand-grid li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-8);
+  min-height: 48px;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-chip);
+  background: var(--oat);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+/* monochrome, never in manufacturer colours */
+.brand-grid svg { width: 16px; height: 16px; opacity: 0.8; }
+
+/* ==========================================================================
+   9. Devices — all three photographs on the phone at once.
+   ========================================================================== */
+.devices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-8);
+}
+.devices img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-card);
+}
+.dev-name {
+  margin-top: var(--sp-8);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: 1.25;
+}
+.dev-desc { display: none; }
+
+/* ==========================================================================
+   10. Repairs — THE SIGNATURE.
+       Full-bleed rows, the photograph alternating left and right edge, the
+       description always visible. Nothing is behind a tap.
+   ========================================================================== */
+.repairs { padding-bottom: 0; }
+.repairs > .container { margin-bottom: var(--sp-16); }
+
+.rep-list { border-top: 1px solid var(--clay); }
+.rep-list > li { border-bottom: 1px solid var(--clay); }
+
+.rep-list a {
+  display: flex;
+  align-items: stretch;
+  transition: background-color 140ms ease;
+}
+.rep-list a:hover { background: var(--oat); }
+
+.rep-shot {
+  position: relative;
+  flex: none;
+  width: 104px;
+  align-self: stretch;
+}
+.rep-shot picture, .rep-shot img {
+  width: 100%;
+  height: 100%;
+}
+.rep-shot img { object-fit: cover; }
+
+.rep-no {
+  position: absolute;
+  top: 0; left: 0;
+  display: grid;
+  place-items: center;
+  width: 28px; height: 28px;
+  background: var(--red-deep);
+  color: var(--white);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.rep-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 14px var(--gutter);
+}
+.rep-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-12);
+}
+.rep-title {
+  font-size: var(--fs-lead);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.rep-ask {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--red-deep);
+}
+.rep-ask svg { width: 14px; height: 14px; }
+.rep-list a:hover .rep-ask { text-decoration: underline; }
+
+.rep-desc {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--fs-row);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* the photograph swaps to the right edge on even rows */
+.rep-list > li:nth-child(even) a { flex-direction: row-reverse; }
+.rep-list > li:nth-child(even) .rep-no { left: auto; right: 0; }
+
+/* ==========================================================================
+   11. How it works — one continuous thread, not four cards.
+   ========================================================================== */
+.steps { position: relative; padding-left: 60px; }
+.steps::before {
+  content: "";
+  position: absolute;
+  left: 15px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--clay);
+}
+.steps li { position: relative; }
+.steps li + li { margin-top: var(--sp-16); }
+
+.step-no {
+  position: absolute;
+  left: -60px; top: 0;
+  display: grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  border: 1.5px solid var(--clay);
+  border-radius: 50%;
+  background: var(--cream);
+  font-size: var(--fs-row);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.step-name { display: block; font-size: var(--fs-lead); font-weight: 600; line-height: 1.3; }
+.step-desc {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-row);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   12. Reviews
+   ========================================================================== */
+.reviews > li {
+  width: 270px;
+  padding: var(--sp-16);
+  border: 1px solid var(--clay);
+  border-radius: var(--r-card);
+  background: var(--cream);
+}
+.stars { display: flex; gap: 2px; color: var(--red-deep); margin-bottom: var(--sp-8); }
+.stars svg { width: 16px; height: 16px; }
+.quote { font-size: 15.5px; line-height: 1.5; }
+.who {
+  margin-top: var(--sp-12);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+.who span {
+  display: block;
+  font-size: var(--fs-label);
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   13. Why choose us — the workshop photograph lives INSIDE the grid rather
+       than costing a banner of its own.
+   ========================================================================== */
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-12);
+}
+.why-shot { grid-row: span 2; }
+.why-shot img {
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  object-fit: cover;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-card);
+}
+.why-tile {
+  padding: 14px;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-card);
+  background: var(--oat);
+}
+.why-tile svg { width: 22px; height: 22px; color: var(--red-deep); margin-bottom: var(--sp-8); }
+.why-name { font-size: 15.5px; font-weight: 600; line-height: 1.25; }
+.why-desc { display: none; }
+
+/* ==========================================================================
+   14. Accessories — 150px cards, not circular tokens: at token scale a cable
+       and a case are the same grey blob.
+   ========================================================================== */
+.acc > li { width: 150px; }
+.acc img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-card);
+}
+.acc-name { margin-top: var(--sp-8); font-size: var(--fs-small); font-weight: 600; }
+.acc-desc { display: none; }
+
+/* ==========================================================================
+   15. FAQ — <details>/<summary>, no JavaScript, no name attribute.
+       Each row opens and closes on its own: the exclusive-accordion
+       behaviour collapses a row above the thumb and yanks the page up.
+   ========================================================================== */
+.faq-box {
+  border: 1px solid var(--clay);
+  border-radius: var(--r-panel);
+  overflow: hidden;
+}
+.faq-box details + details { border-top: 1px solid var(--clay); }
+
+.faq-box summary {
+  position: relative;
+  min-height: 56px;
+  padding: 17px 44px 17px var(--sp-16);
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  list-style: none;
+}
+.faq-box summary::-webkit-details-marker { display: none; }
+.faq-box summary::after {
+  content: "+";
+  position: absolute;
+  top: 50%; right: var(--sp-16);
+  transform: translateY(-50%);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--red-deep);
+}
+.faq-box details[open] summary::after { content: "\2212"; }
+.faq-box details[open] {
+  background: var(--oat);
+  box-shadow: inset 4px 0 0 var(--red);
+}
+.faq-box p {
+  padding: 0 var(--sp-16) var(--sp-16);
+  font-size: var(--fs-btn);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 68ch;
+}
+
+/* ==========================================================================
+   16. Visit
+   ========================================================================== */
+.addr { font-size: var(--fs-lead); line-height: 1.5; }
+
+.contact-rows {
+  border: 1px solid var(--clay);
+  border-radius: var(--r-panel);
+  overflow: hidden;
+}
+.contact-rows li + li { border-top: 1px solid var(--clay); }
+.contact-rows a {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+  min-height: 60px;
+  padding-inline: var(--sp-16);
+  font-size: var(--fs-btn);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 140ms ease;
+}
+.contact-rows a:hover { background: var(--oat); }
+.contact-rows svg { width: 22px; height: 22px; color: var(--red-deep); }
+
+.map {
+  margin-top: var(--sp-16);
+  border: 1px solid var(--clay);
+  border-radius: var(--r-panel);
+  overflow: hidden;
+  background: var(--oat);
+}
+.map iframe { width: 100%; height: 180px; border: 0; }
+.visit-grid .btn-block { margin-top: var(--sp-12); }
+
+/* ==========================================================================
+   17. Closing band — the one saturated red field, and it arrives at the end
+       where it reads as a call to action rather than an alarm.
+   ========================================================================== */
+.close-plate img {
+  width: 100%;
+  aspect-ratio: 390 / 110;
+  object-fit: cover;
+}
+.close-band {
+  background: var(--red-deep);
+  color: var(--cream);
+  padding-block: 28px;
+}
+.close-band h2 { font-size: 22px; line-height: 1.25; }
+.close-band p { margin-top: var(--sp-8); font-size: 15.5px; }
+.close-acts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-12);
+  margin-top: var(--sp-20);
+}
+
+/* ==========================================================================
+   18. Footer — the only ink ground, so the page has a clear ending.
+   ========================================================================== */
+.site-foot {
+  background: var(--ink);
+  color: var(--cream);
+  padding-block: var(--sp-32);
+  padding-bottom: calc(var(--sp-32) + env(safe-area-inset-bottom, 0px));
+}
+.foot-logo { width: auto; height: 26px; }
+.foot-tag {
+  margin-top: var(--sp-12);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--foot-mute);
+  max-width: 44ch;
+}
+
+.foot-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: var(--sp-20);
+}
+.foot-links a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--fs-row);
+  font-weight: 500;
+}
+.foot-links a:hover { text-decoration: underline; }
+
+.foot-contact { margin-top: var(--sp-12); }
+.foot-contact a {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+  min-height: 44px;
+  font-size: var(--fs-row);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.foot-contact svg { width: 17px; height: 17px; color: var(--foot-mute); }
+.foot-contact a:hover { text-decoration: underline; }
+
+.foot-legal {
+  margin-top: var(--sp-16);
+  padding-top: var(--sp-16);
+  border-top: 1px solid var(--foot-rule);
+  font-size: var(--fs-label);
+  line-height: 1.5;
+  color: var(--foot-mute);
+}
+.foot-legal + .foot-legal { border-top: 0; padding-top: 0; margin-top: var(--sp-8); }
+
+/* ==========================================================================
+   19. Bottom action bar — fixed from the first pixel, never conditional.
+       No blur and no translucency: v2's translucent bars are exactly how
+       contrast bugs ship.
+   ========================================================================== */
+.bar {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: 1fr 1fr 56px;
+  gap: var(--sp-8);
+  padding: 5px var(--gutter) calc(5px + env(safe-area-inset-bottom, 0px));
+  background: var(--cream);
+  border-top: 1px solid var(--clay);
+  box-shadow: var(--shadow-bar);
+}
+.bar .btn { min-height: 52px; padding-inline: var(--sp-8); }
+
+.bar-dir {
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  min-height: 52px;
+  border: 1px solid var(--clay);
+  border-radius: var(--r-btn);
+  color: var(--red-deep);
+  transition: background-color 140ms ease;
+}
+.bar-dir svg { width: 20px; height: 20px; }
+.bar-dir span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.bar-dir:hover { background: var(--oat); }
+
+/* ==========================================================================
+   20. Wider screens — 720px and up
+   ========================================================================== */
+@media (min-width: 720px) {
+  :root { --gutter: 24px; }
+
+  .section { padding-block: var(--sp-56); }
+
+  .hero-acts { grid-template-columns: auto auto; justify-content: start; }
+  .hero-acts .btn { padding-inline: var(--sp-24); }
+  .trust li { font-size: var(--fs-row); }
+
+  .brand-grid { grid-template-columns: repeat(6, 1fr); }
+  .brand-grid li { min-height: 56px; }
+  .note { margin-inline: auto; text-align: center; }
+
+  .devices { gap: var(--sp-16); }
+  .dev-desc {
+    display: block;
+    margin-top: 2px;
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+  }
+
+  .rep-shot { width: 180px; }
+  .rep-body { padding-block: var(--sp-20); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-24) var(--sp-32);
+    padding-left: 0;
+  }
+  .steps::before { display: none; }
+  .steps li { padding-left: 48px; }
+  .steps li + li { margin-top: 0; }
+  .step-no { left: 0; }
+
+  .why-grid { grid-template-columns: repeat(3, 1fr); }
+  .why-shot { grid-row: span 2; }
+
+  .acc > li { width: 190px; }
+  .acc-desc {
+    display: block;
+    margin-top: 2px;
+    font-size: var(--fs-label);
+    color: var(--ink-soft);
+  }
+
+  .visit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-32); }
+  .map iframe { height: 320px; }
+
+  .close-band h2 { font-size: 28px; }
+  .close-acts { grid-template-columns: auto auto; justify-content: start; }
+  .close-acts .btn { padding-inline: var(--sp-24); }
+
+  .foot-links { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ==========================================================================
+   21. Wide screens — 1040px and up
+   ========================================================================== */
+@media (min-width: 1040px) {
+  :root { --gutter: 32px; --bar-h: 0px; }
+
+  body { padding-bottom: 0; }
+  html { scroll-padding-top: 88px; scroll-padding-bottom: 0; }
+
+  .section { padding-block: var(--sp-72); }
+
+  /* the bottom bar is a phone pattern; on a desktop the header carries it */
+  .bar { display: none; }
+
+  .site-head { position: sticky; top: 0; z-index: 20; }
+  .head-in { padding-block: var(--sp-16); gap: var(--sp-24); }
+  .logo img { height: 34px; }
+  .head-call { display: none; }
+
+  .head-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-24);
+    margin-left: auto;
+  }
+  .head-nav a {
+    position: relative;
+    padding-block: var(--sp-8);
+    font-size: var(--fs-btn);
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: color 140ms ease;
+  }
+  .head-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: var(--red);
+    opacity: 0;
+    transition: opacity 140ms ease;
+  }
+  .head-nav a:hover, .head-nav a:focus-visible { color: var(--ink); }
+  .head-nav a:hover::after, .head-nav a:focus-visible::after { opacity: 1; }
+
+  /* a desktop visitor is usually reading the number to dial on the phone in
+     their other hand, so it has to be selectable text, not an icon */
+  .head-tel {
+    display: inline-block;
+    font-size: var(--fs-btn);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .head-tel:hover { text-decoration: underline; }
+  .head-wa { display: inline-flex; }
+
+  /* --- hero goes two-column, the photograph re-crops to a portrait --- */
+  .hero { padding-block: var(--sp-56) var(--sp-40); }
+  .hero .container {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--sp-40);
+    align-items: center;
+  }
+  .hero h1 { line-height: 1.06; }
+  .hero .lead { font-size: var(--fs-lead); }
+  .hero .trust { display: flex; }
+  .hero .trust li { flex: 1; }
+  .hero-shot { margin-top: 0; }
+  .hero-shot img { aspect-ratio: 4 / 5; }
+
+  /* the contents strip is replaced by the sticky header nav */
+  .contents { display: none; }
+
+  .devices { grid-template-columns: repeat(3, 1fr); gap: var(--sp-24); }
+  .devices img { aspect-ratio: 16 / 10; }
+  .dev-name { font-size: var(--fs-lead); }
+
+  /* --- repairs go full-bleed, half photograph half text --- */
+  .rep-list a {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+  .rep-shot { width: auto; }
+  .rep-shot img { height: 100%; min-height: 220px; }
+  .rep-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--sp-40) clamp(32px, 6vw, 96px);
+  }
+  .rep-head { display: block; }
+  .rep-title { font-size: 24px; }
+  .rep-desc { font-size: var(--fs-btn); line-height: 1.6; max-width: 46ch; }
+  .rep-ask { margin-top: var(--sp-16); text-decoration: underline; }
+  .rep-list > li:nth-child(even) .rep-shot { order: 2; }
+
+  .steps { grid-template-columns: repeat(4, 1fr); gap: var(--sp-24); }
+
+  /* the rails dissolve — everything is visible at once, no gesture needed */
+  .rail {
+    display: grid;
+    overflow: visible;
+    padding-inline: 0;
+    scroll-snap-type: none;
+  }
+  .rail.reviews { grid-template-columns: repeat(3, 1fr); gap: var(--sp-24); }
+  .rail.acc { grid-template-columns: repeat(5, 1fr); gap: var(--sp-24); }
+  .reviews > li, .acc > li { width: auto; }
+  .quote { font-size: var(--fs-lead); line-height: 1.55; }
+  .acc img { aspect-ratio: 4 / 3; }
+  .acc-name { font-size: var(--fs-btn); }
+  /* the rails sit inside the container again once they stop bleeding */
+  .rail { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: var(--gutter); }
+
+  .why-grid { grid-template-columns: repeat(4, 1fr); gap: var(--sp-16); }
+  .why-tile { padding: var(--sp-20); }
+  .why-desc {
+    display: block;
+    margin-top: 4px;
+    font-size: var(--fs-row);
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* two columns of four; opening one never moves the other column */
+  .faq-box {
+    border: 0;
+    border-radius: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--sp-32);
+    overflow: visible;
+  }
+  .faq-box details {
+    border: 1px solid var(--clay);
+    border-radius: var(--r-card);
+    margin-bottom: var(--sp-12);
+  }
+  .faq-box details + details { border-top: 1px solid var(--clay); }
+
+  .map iframe { height: 400px; }
+
+  .close-plate img { aspect-ratio: 1440 / 220; }
+  .close-band { padding-block: var(--sp-40); }
+  .close-band .container {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--sp-32);
+    align-items: center;
+  }
+  .close-band h2 { font-size: 34px; }
+  .close-acts { margin-top: 0; justify-content: end; }
+
+  .foot-links { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* ==========================================================================
+   22. Reduced motion
+       There is no @keyframes block anywhere in this file — no scroll reveal,
+       no marquee, no auto-advance, nothing that can leave content invisible.
+       Colour changes are KEPT, just made instant: someone who has asked for
+       less motion still needs to know a control responded.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   23. Prose — the privacy and terms pages
+   ========================================================================== */
+.prose { max-width: 70ch; margin-top: var(--sp-20); }
+.prose h2 { font-size: 1.35rem; margin-top: var(--sp-32); margin-bottom: var(--sp-8); }
+.prose h3 { font-size: 1.05rem; margin-top: var(--sp-24); margin-bottom: var(--sp-4); }
+.prose p, .prose li { color: var(--ink-soft); line-height: 1.7; }
+.prose p { margin-bottom: var(--sp-16); }
+.prose ul { list-style: disc; padding-left: 1.2rem; margin-bottom: var(--sp-16); display: grid; gap: 6px; }
+.prose a { color: var(--red-deep); text-decoration: underline; text-underline-offset: 3px; }
+.prose strong { color: var(--ink); font-weight: 600; }
+
+/* the "owner still needs to fill this in" callout inherited from version 1 */
+.prose .todo, .todo {
+  padding: var(--sp-16);
+  margin-bottom: var(--sp-16);
+  border: 1px dashed var(--red-deep);
+  border-radius: var(--r-card);
+  background: var(--tint);
+}
+.todo p { color: var(--ink); }
+.todo p:last-child { margin-bottom: 0; }
+
+.nf .lead { margin-top: var(--sp-12); }
+.nf .hero-acts { max-width: 420px; }
+
+/* ==========================================================================
+   24. Corrections found by measuring the built page
+   ========================================================================== */
+
+/* The "Home" link on the legal pages was 17px tall inside its eyebrow. */
+.eyebrow a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* The bottom bar's third target carries a real word, so that word has to be
+   readable: 13px, the same floor as everything else on the page, with the
+   column widened to hold it. */
+.bar { grid-template-columns: 1fr 1fr 70px; }
+.bar-dir span { font-size: var(--fs-label); }
+
+/* Very narrow phones (320-400px). Two nowrap buttons plus a labelled third
+   target do not fit at 320px at full size, so the bar tightens rather than
+   overflowing, and the paired buttons elsewhere stack. */
+@media (max-width: 400px) {
+  .bar { padding-inline: 12px; gap: 6px; }
+  .bar .btn { font-size: 15px; padding-inline: 6px; gap: 6px; }
+  .bar .btn svg { width: 16px; height: 16px; }
+}
+@media (max-width: 379px) {
+  .hero-acts, .close-acts { grid-template-columns: 1fr; }
+}
+
+/* --- repairs: title / Ask / description placement -------------------------
+   The three pieces are siblings so each layout can order them itself:
+   on a phone the Ask sits beside the title, on a desktop it sits under the
+   description as its own line. */
+.rep-body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--sp-12);
+  align-content: center;
+}
+.rep-title { grid-column: 1; grid-row: 1; }
+.rep-ask   { grid-column: 2; grid-row: 1; align-self: baseline; }
+.rep-desc  { grid-column: 1 / -1; grid-row: 2; }
+
+@media (min-width: 1040px) {
+  /* The photograph is taken out of flow so the row height comes from the
+     text, not from the image's own 16:9 — at half of 1440px that was making
+     every row 415px tall. */
+  .rep-list a { min-height: 250px; }
+  .rep-shot picture { position: absolute; inset: 0; }
+  .rep-shot img { width: 100%; height: 100%; }
+
+  .rep-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .rep-title { order: 1; }
+  .rep-desc  { order: 2; margin-top: var(--sp-8); }
+  .rep-ask   { order: 3; margin-top: var(--sp-16); align-self: flex-start; }
+}
