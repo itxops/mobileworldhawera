@@ -698,3 +698,73 @@ a.fact:hover { border-color: var(--brand); }
 /* Tap targets measured under 44px on the built page. */
 .foot-bottom a { padding-block: 12px; }
 .eyebrow a { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ==========================================================================
+   21. Sliders — brand names and reviews
+       Both run on CSS keyframes, so this stays a no-JavaScript build.
+
+       The track holds the SAME list twice. Translating it -50% lands exactly
+       on the seam, so the loop is invisible. That only works if every item is
+       spaced identically, which is why the spacing is margin-right on each
+       item rather than `gap` on the track — a gap leaves one extra space
+       between the two halves and the loop visibly jumps.
+   ========================================================================== */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee-track {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  align-items: stretch;
+  animation: mw-slide var(--mq, 40s) linear infinite;
+}
+@keyframes mw-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+/* pause while someone is reading one */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
+
+/* --- brand names --- */
+.brandstrip .marquee { --mq: 32s; }
+.brandstrip .marquee-track > li { margin-right: 46px; }
+
+/* --- reviews --- */
+.reviews-slider { --mq: 78s; padding-block: 4px 22px; }
+.reviews-slider .review { width: 300px; flex: none; margin-right: 18px; }
+
+@media (min-width: 760px) {
+  .reviews-slider .review { width: 340px; }
+}
+
+/* ==========================================================================
+   22. Reduced motion for the sliders
+       Nothing auto-scrolls. Both become ordinary rows the reader pushes
+       themselves, and the duplicate half is hidden so every item appears once.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+  }
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+    padding-inline: var(--gutter);
+  }
+  .marquee-track > * { scroll-snap-align: start; }
+  .marquee-track > [data-clone] { display: none; }
+}
+
+/* The brand list kept its original `gap`, which put (2N-1) gaps across the
+   track but only N inside each half — so the loop landed 12.5px off the seam
+   and visibly jumped once per cycle. Spacing comes from margin-right only. */
+.brandstrip .marquee-track { gap: 0; justify-content: flex-start; }
