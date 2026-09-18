@@ -44,8 +44,6 @@
   .brand img { height: 30px; }
 
   .g-2, .g-4, .g-5 { grid-template-columns: repeat(2, 1fr); }
-  /* five accessories in a 2-up grid leaves a lone card — let it fill the row */
-  .g-5 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   .steps { grid-template-columns: repeat(2, 1fr); }
 
   .hero-badge { right: auto; max-width: 80%; }

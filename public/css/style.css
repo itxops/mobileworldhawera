@@ -1283,44 +1283,96 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
    16. Footer
    ========================================================================== */
 .site-footer {
+  position: relative;
   background: var(--paper-2);
   color: var(--ink-text);
-  border-top: 1px solid var(--line-ink);
-  padding-top: 3.25rem;
+  padding-top: 3.5rem;
   padding-bottom: calc(1.5rem + var(--mobile-bar-h, 0px));
 }
-.footer-top { display: grid; gap: 2.25rem; }
-.footer-brand img { width: min(270px, 100%); height: auto; margin-bottom: 1.1rem; }
-.footer-brand p { color: var(--muted-ink); font-size: 0.92rem; max-width: 40ch; }
+/* a brand hairline instead of a flat grey border */
+.footer-rule {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red) 25%, var(--red-bright) 50%, var(--red) 75%, transparent);
+}
+
+.footer-top { display: grid; gap: 2.5rem; }
+
+.footer-brand img { width: min(255px, 100%); height: auto; margin-bottom: 1rem; }
+.footer-brand p { color: var(--muted-ink); font-size: 0.92rem; max-width: 34ch; line-height: 1.6; }
 .footer-brand .footer-tag {
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--red-ink);
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.8rem;
 }
+.footer-brand .btn { font-size: 0.82rem; }
 
-.footer-col h2, .footer-col h3 {
+.footer-col h2,
+.footer-col h3 {
+  position: relative;
+  padding-bottom: 0.7rem;
+  margin-bottom: 1.1rem;
   font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--ink-text);
-  margin-bottom: 1.1rem;
 }
-.footer-col ul { display: grid; gap: 0.35rem; }
-.footer-col a, .footer-col li { color: var(--muted-ink); font-size: 0.92rem; }
-/* padding keeps footer links at a comfortable 24px+ touch height */
-.footer-col ul a { display: inline-block; padding-block: 0.25rem; }
-.footer-col a { transition: color var(--t-fast) var(--ease); }
-.footer-col a:hover { color: var(--red-ink); }
-.footer-col address { font-style: normal; color: var(--muted-ink); font-size: 0.92rem; line-height: 1.8; }
+.footer-col h2::after,
+.footer-col h3::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 22px; height: 2px;
+  border-radius: 2px;
+  background: var(--red);
+}
+
+.footer-col ul { display: grid; gap: 0.15rem; }
+.footer-col li { color: var(--muted-ink); font-size: 0.92rem; }
+/* the padding keeps every footer link at a comfortable 24px+ touch height */
+.footer-col ul a {
+  display: inline-block;
+  padding-block: 0.3rem;
+  color: var(--muted-ink);
+  transition: color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.footer-col ul a:hover { color: var(--red-ink); transform: translateX(3px); }
+
+/* Contact rows reuse the icon-row idea from the rest of the page, which also
+   lets the opening hours sit on the same rail as everything else instead of
+   floating in a bordered box of their own. */
+.f-list { display: grid; gap: 0.7rem; }
+.f-list li { font-size: 0.9rem; color: var(--muted-ink); line-height: 1.55; }
+/* Two classes deep so this out-ranks the generic .footer-col ul a rule, which
+   would otherwise force the linked rows to inline-block and stack the icon. */
+.f-list .f-row { display: flex; align-items: flex-start; gap: 0.7rem; padding-block: 0; }
+.f-list a.f-row { transition: color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
+.f-list a.f-row:hover { color: var(--red-ink); transform: none; }
+.f-list a.f-row:hover .f-icon { background: var(--red-grad); border-color: transparent; color: #fff; }
+.f-list strong { display: block; color: var(--ink-text); font-weight: 600; }
+.f-icon {
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  flex: none;
+  margin-top: 1px;
+  border-radius: 9px;
+  background: rgba(221, 49, 45, 0.09);
+  border: 1px solid rgba(221, 49, 45, 0.2);
+  color: var(--red-ink);
+  transition: background var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease);
+}
+.f-icon svg { width: 15px; height: 15px; }
 
 .footer-bottom {
-  margin-top: 2.75rem;
+  margin-top: 3rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--line-ink);
   display: flex;
@@ -1330,7 +1382,8 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
   color: var(--muted-ink);
 }
 .footer-bottom nav { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; }
-.footer-bottom a:hover { color: var(--ink-text); }
+.footer-bottom a { transition: color var(--t-fast) var(--ease); }
+.footer-bottom a:hover { color: var(--red-ink); }
 
 /* ==========================================================================
    17. Sticky actions
