@@ -112,6 +112,9 @@
 
   .nav { display: none; }
   .burger { display: flex; }
+  /* The push-right lives on .nav, which is hidden here — so without this the
+     burger sits directly after the logo with 126px of dead space beside it. */
+  .header-actions { margin-left: auto; }
   .header-actions .btn--ghost { display: none; }
   .mobile-bar { display: flex; }
 
