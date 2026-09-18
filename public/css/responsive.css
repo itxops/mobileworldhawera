@@ -47,12 +47,7 @@
   .g-3 { grid-template-columns: repeat(2, 1fr); }
   .grid { gap: 1.15rem; }
 
-  .field-grid { grid-template-columns: repeat(2, 1fr); }
-  .field--full { grid-column: 1 / -1; }
-
-  .contact-tiles { grid-template-columns: repeat(2, 1fr); }
   .cta-band-inner { padding: 3.25rem 2.5rem; }
-  .form-card { padding: 2rem 1.75rem; }
 }
 
 /* --------------------------------------------------------------------------
@@ -65,7 +60,6 @@
   .split--media-right .split-media { order: 2; }
 
   .location-grid { grid-template-columns: 1.05fr 0.95fr; gap: 2.25rem; }
-  .contact-grid { grid-template-columns: 1.15fr 0.85fr; gap: 2.25rem; }
 
   .footer-top { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
   .footer-brand { grid-column: 1 / -1; }
@@ -146,7 +140,6 @@
   /* the five accessory categories sit on one clean row at desktop */
   .g-5 { grid-template-columns: repeat(5, 1fr); }
   .location-grid { grid-template-columns: 1.1fr 0.9fr; gap: 3rem; }
-  .contact-grid { grid-template-columns: 1.2fr 0.8fr; gap: 3rem; }
 
   .page-hero { padding-top: calc(var(--header-h) + 4.5rem); padding-bottom: 4.5rem; }
   .cta-band-inner { padding: 4.75rem 3.75rem; max-width: 58%; }
@@ -176,7 +169,7 @@
    Coarse pointers — drop the hover lift, keep the tap targets
    -------------------------------------------------------------------------- */
 @media (hover: none) {
-  .gcard:hover, .step:hover, .contact-tile:hover,
+  .gcard:hover, .step:hover,
   .brand-chip:hover, .btn:hover, a.detail-row:hover { transform: none; }
   .gcard:hover::before { opacity: 0; }
   .btn:hover::after { transform: translateX(-120%); }
@@ -197,7 +190,7 @@
   }
   .lead, p, .muted { color: #333 !important; }
   a { color: #000; text-decoration: underline; }
-  .gcard, .detail-row, .contact-tile, .step {
+  .gcard, .detail-row, .step {
     border: 1px solid #ccc !important;
     box-shadow: none !important;
     background: #fff !important;

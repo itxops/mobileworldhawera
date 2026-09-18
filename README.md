@@ -28,12 +28,12 @@ MobileworldHawera/
     │   ├── style.css          Design tokens + all components (mobile-first)
     │   └── responsive.css     Every media query lives here
     ├── js/
-    │   └── main.js            Header, drawer, scroll reveal, card spotlight, quote form
+    │   └── main.js            Header, drawer, scroll reveal, card spotlight
     ├── assets/
     │   ├── fonts/             Self-hosted Archivo + Inter (latin variable subsets)
     │   └── logo/              logo.svg, mw-mark.svg, og-image.jpg, PNG app icons
     └── images/
-        ├── hero/  services/  accessories/  store/
+        ├── hero/  devices/  accessories/  store/  cta/
         └── CREDITS.md         Image sources and licence
 ```
 
@@ -47,13 +47,16 @@ comment:
 
 1. Hero
 2. Brands we repair (scrolling marquee)
-3. What We Repair — 3 device categories + 6 repair services (`id="services"`)
+3. What We Repair — 3 photo device cards + 6 repair services (`id="services"`)
 4. How It Works — 4 steps (`id="how-it-works"`)
-5. Why Choose MW Hawera — 6 benefits (`id="why"`)
-6. Testimonials (`id="reviews"`)
-7. Accessories (`id="accessories"`)
-8. Come see us in Hawera — map, details, hours, quote form (`id="contact"`, form at `id="quote"`)
+5. Why Choose MW Hawera — workshop photo + 6 benefits (`id="why"`)
+6. Testimonials — one compact sliding row (`id="reviews"`)
+7. Accessories — 5 photo cards (`id="accessories"`)
+8. Come see us in Hawera — map, details, hours (`id="contact"`)
 9. Closing call-to-action
+
+There is **no contact form** — removed at the owner's request. Every call to
+action goes straight to WhatsApp, the phone, or directions.
 
 Each of the six repairs also has its own id (`#phone-screen-repair`,
 `#battery-replacement`, …), so you can link straight to one from a Google post
@@ -163,7 +166,7 @@ Nothing on this site costs money to run:
 - **No third-party fonts or CDNs.** Archivo and Inter are self-hosted, so there
   is no request to Google Fonts.
 - **No analytics or tracking scripts.**
-- **The form needs no server** — see §7.
+- **No contact form** — every call to action is a direct WhatsApp, tel: or maps link.
 
 The whole site is ~770 KB across 38 files, far inside Spark's 10 GB storage and
 360 MB/day transfer.
@@ -196,32 +199,20 @@ search-and-replacing that URL in `public/*.html`, `robots.txt` and `sitemap.xml`
 
 ---
 
-## 7. The quote form
+## 7. How people get in touch
 
-Spark serves static files only, so the form has two working paths and no backend:
+There is no form and no backend. Every action is a direct link, which is why
+nothing here can break or cost anything:
 
-1. **Send via WhatsApp** — validates the fields, then opens WhatsApp with the
-   whole enquiry already written out. This is the primary path.
-2. **Request a Quote** — opens the visitor's email app with the enquiry
-   pre-filled as a `mailto:` to the shop address.
+| Control | Goes to |
+|---|---|
+| WhatsApp buttons, floating button, mobile bar | `wa.me/64220863000` with the enquiry pre-written |
+| Phone numbers | `tel:+6439272313` |
+| Email | `mailto:mobileworldhawera@gmail.com` |
+| Get Directions / Find us / Visit Our Store | Google Maps directions to 184 High Street |
 
-Neither can silently fail.
-
-To have submissions arrive as email instead, sign up for a form service
-(Formspree, Web3Forms, Basin — all free tiers) and add its endpoint:
-
-```html
-<form id="quote-form" novalidate data-endpoint="https://formspree.io/f/YOUR_FORM_ID">
-```
-
-`js/main.js` detects `data-endpoint` and POSTs JSON to it instead, showing a
-success or failure message in place. Nothing else changes.
-
-**On keys:** only ever put a *public* form ID here — anything in `public/` is
-readable by anyone. Never paste a private API key, SMTP password or Firebase
-service-account credential into the HTML or JavaScript.
-
----
+If you ever want a form back, it would be a free form service (Formspree,
+Web3Forms, Basin) posting straight from the page — still no server, still free.
 
 ## 8. Editing
 
@@ -310,16 +301,22 @@ ratio changes.
 
 ## 11. Images and licensing
 
-Photographs are free stock images from Pexels, used under the Pexels licence
-(free for commercial use, no attribution required). Source URLs for every file
-are in `public/images/CREDITS.md`.
+All 11 photographs are free stock images from **Pexels**, used under the
+[Pexels licence](https://www.pexels.com/license/): free for commercial use, no
+attribution required, no fee, no expiry. The source URL for every single file is
+listed in `public/images/CREDITS.md`, so any of them can be checked.
 
-No manufacturer photography, no competitor content, and no stock photo showing a
-visible manufacturer logo. Brand names in the marquee are text only, with a note
-stating that Mobile World Hawera is an independent repair store and not an
-authorised service centre for any manufacturer.
+**On trademarks.** The licence covers copyright, but a brand logo *inside* a
+photo is a separate issue. So every candidate was opened and looked at before
+use, and anything showing a manufacturer's name or logo was rejected — JBL,
+Bose, Marshall, Sony and MIVI speakers, and Apple-branded earbuds and cases all
+got binned. No manufacturer's own product photography was used, and nothing was
+taken from another repair business.
 
----
+The only brand names on the site are the plain text chips in the "Brands we
+repair" row, which carry a note stating that Mobile World Hawera is an
+independent repair store and is not an authorised service centre for, or
+affiliated with, any of those manufacturers.
 
 ## 12. Clean URLs (optional)
 

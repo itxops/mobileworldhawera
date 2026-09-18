@@ -14,12 +14,11 @@
    12. Reviews
    13. Accessories
    14. Location & map
-   15. Contact & forms
-   16. CTA band
-   17. Footer
-   18. Sticky actions (WhatsApp FAB, mobile bar)
-   19. Inner pages, FAQ, prose
-   20. Motion / reveal
+   15. CTA band
+   16. Footer
+   17. Sticky actions (WhatsApp FAB, mobile bar)
+   18. Inner pages & prose
+   19. Motion / reveal
    All media queries live in responsive.css
    ========================================================================== */
 
@@ -130,7 +129,6 @@
   --card-border: rgba(255, 255, 255, 0.09);
   --card-border-hover: rgba(255, 255, 255, 0.2);
   --accent-text: var(--red-bright);
-  --field-bg: rgba(255, 255, 255, 0.045);
   color-scheme: dark;
 }
 .theme-light {
@@ -144,7 +142,6 @@
   --card-border: rgba(8, 8, 12, 0.09);
   --card-border-hover: rgba(8, 8, 12, 0.18);
   --accent-text: var(--red-ink);
-  --field-bg: #ffffff;
   color-scheme: light;
 }
 .theme-muted {
@@ -158,7 +155,6 @@
   --card-border: rgba(8, 8, 12, 0.08);
   --card-border-hover: rgba(8, 8, 12, 0.16);
   --accent-text: var(--red-ink);
-  --field-bg: #ffffff;
   color-scheme: light;
 }
 
@@ -877,16 +873,40 @@ body.nav-open { overflow: hidden; }
   box-shadow: 0 10px 24px -8px var(--red-glow);
 }
 
-/* --- device category card (Smartphones / Tablets / Laptops) --- */
-.device-card {
+/* --- cards that lead with a photograph --- */
+.photo-card { display: flex; flex-direction: column; padding: 0; }
+.card-media {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.card-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
+.gcard:hover .card-media img { transform: scale(1.055); }
+.photo-card .card-body {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  padding: 2rem 1.75rem;
-  text-align: left;
+  gap: 0.6rem;
+  padding: 1.5rem 1.5rem 1.7rem;
 }
-.device-card .c-icon { width: 60px; height: 60px; border-radius: 18px; }
-.device-card .c-icon svg { width: 30px; height: 30px; }
+/* the icon badge rides up over the bottom of the photo */
+.photo-card .card-body .c-icon {
+  margin-top: -3.4rem;
+  position: relative;
+  z-index: 1;
+  background: var(--red-grad);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 12px 26px -10px var(--red-glow);
+}
+
+/* --- device category card (Smartphones / Tablets / Laptops) --- */
+.device-card .card-media { aspect-ratio: 16 / 10; }
+.device-card .c-icon { width: 58px; height: 58px; border-radius: 17px; }
+.device-card .c-icon svg { width: 29px; height: 29px; }
 .device-card h3 { font-size: 1.3rem; }
 .device-card p { color: var(--dim); font-size: 0.95rem; }
 
@@ -917,18 +937,11 @@ body.nav-open { overflow: hidden; }
 .benefit p { font-size: 0.91rem; color: var(--dim); line-height: 1.6; }
 
 /* --- accessory card --- */
-.acc-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 2rem 1.25rem;
-  text-align: center;
-}
-.acc-card .c-icon { width: 58px; height: 58px; border-radius: 18px; }
-.acc-card .c-icon svg { width: 29px; height: 29px; }
-.acc-card h3 { font-size: 1.02rem; }
-.acc-card p { font-size: 0.86rem; color: var(--dim); }
+.acc-card { text-align: center; }
+.acc-card .card-media { aspect-ratio: 4 / 3; }
+.acc-card .card-body { padding: 1.05rem 0.9rem 1.3rem; gap: 0.3rem; }
+.acc-card h3 { font-size: 0.98rem; }
+.acc-card p { font-size: 0.82rem; color: var(--dim); line-height: 1.5; }
 
 /* Split media block */
 .split { display: grid; gap: 2.25rem; align-items: center; }
@@ -1027,43 +1040,45 @@ body.nav-open { overflow: hidden; }
 /* ==========================================================================
    12. Reviews
    ========================================================================== */
+/* Kept deliberately compact: the testimonials band is a quick scan, not a
+   feature section. One row, small cards, still sliding. */
 .review-card {
   flex: none;
-  width: min(340px, 78vw);
-  padding: 1.6rem 1.5rem;
-  border-radius: var(--radius-lg);
+  width: min(292px, 76vw);
+  padding: 1.2rem 1.15rem;
+  border-radius: var(--radius);
   border: 1px solid var(--card-border);
   background: var(--card);
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 0.65rem;
 }
 .theme-light .review-card, .theme-muted .review-card { box-shadow: var(--shadow-sm); }
-.review-card blockquote { font-size: 0.95rem; line-height: 1.65; color: var(--fg); }
+.review-card blockquote { font-size: 0.86rem; line-height: 1.6; color: var(--fg); }
 .review-card figcaption {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
   margin-top: auto;
-  padding-top: 0.4rem;
+  padding-top: 0.2rem;
 }
 .avatar {
   display: grid;
   place-items: center;
-  width: 38px; height: 38px;
+  width: 32px; height: 32px;
   flex: none;
   border-radius: 50%;
   background: var(--red-grad);
   color: #fff;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
-.review-card .who { font-weight: 600; font-size: 0.92rem; color: var(--fg); }
-.review-card .src { font-size: 0.78rem; color: var(--dim); }
+.review-card .who { font-weight: 600; font-size: 0.85rem; color: var(--fg); }
+.review-card .src { font-size: 0.73rem; color: var(--dim); }
 
 .stars { display: inline-flex; gap: 0.15rem; color: #ffc043; }
-.stars svg { width: 18px; height: 18px; }
+.stars svg { width: 15px; height: 15px; }
 
 /* Google badge — amber on white fails contrast, so it sits on a dark pill */
 .review-badge {
@@ -1211,124 +1226,7 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
 .hours-list li span:last-child { color: var(--fg); font-weight: 600; }
 
 /* ==========================================================================
-   15. Contact & forms
-   ========================================================================== */
-.contact-grid { display: grid; gap: 1.75rem; align-items: start; }
-
-.form-card {
-  padding: 1.6rem 1.35rem;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--card-border);
-  background: var(--card);
-}
-.theme-light .form-card, .theme-muted .form-card { box-shadow: var(--shadow); }
-
-.field-grid { display: grid; gap: 1rem; }
-.field { display: grid; gap: 0.4rem; }
-.field label {
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-.field .req { color: var(--accent-text); }
-
-.field input,
-.field select,
-.field textarea {
-  width: 100%;
-  min-height: 52px;
-  padding: 0.8rem 0.95rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--card-border);
-  background: var(--field-bg);
-  color: var(--fg);
-  font-size: 1rem;
-  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
-}
-.field textarea { min-height: 128px; resize: vertical; line-height: 1.6; }
-.field select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355555f' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.85rem center;
-  background-size: 18px;
-  padding-right: 2.6rem;
-}
-.field input::placeholder, .field textarea::placeholder { color: var(--dim); opacity: 0.75; }
-.field input:focus, .field select:focus, .field textarea:focus {
-  outline: none;
-  border-color: var(--accent-text);
-  box-shadow: 0 0 0 3px rgba(221, 49, 45, 0.16);
-}
-.field input[aria-invalid='true'],
-.field textarea[aria-invalid='true'],
-.field select[aria-invalid='true'] { border-color: var(--red); }
-
-.field-error { font-size: 0.8rem; color: var(--red-ink); }
-.theme-dark .field-error { color: var(--red-bright); }
-
-.form-note { margin-top: 1rem; font-size: 0.82rem; color: var(--dim); line-height: 1.55; }
-.form-status {
-  margin-top: 1rem;
-  padding: 0.9rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--card-border);
-  background: var(--field-bg);
-  font-size: 0.9rem;
-  color: var(--fg);
-}
-
-.contact-tiles { display: grid; gap: 0.75rem; }
-.contact-tile {
-  display: flex;
-  align-items: center;
-  gap: 0.95rem;
-  padding: 1.15rem 1.2rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--card-border);
-  background: var(--card);
-  transition: transform var(--t) var(--ease), border-color var(--t) var(--ease);
-}
-.contact-tile:hover { transform: translateY(-3px); border-color: var(--card-border-hover); }
-.contact-tile .ct-icon {
-  display: grid;
-  place-items: center;
-  width: 46px; height: 46px;
-  flex: none;
-  border-radius: 14px;
-  background: var(--red-grad);
-  color: #fff;
-  box-shadow: 0 8px 20px -8px var(--red-glow);
-}
-.contact-tile--whatsapp .ct-icon {
-  background: linear-gradient(135deg, #2ee277, #1fbb57);
-  color: #04220d;
-  box-shadow: 0 8px 20px -8px rgba(37, 211, 102, 0.5);
-}
-.contact-tile .ct-icon svg { width: 23px; height: 23px; }
-.contact-tile .ct-label {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-.contact-tile .ct-value {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  color: var(--fg);
-  overflow-wrap: anywhere;
-}
-
-/* ==========================================================================
-   16. CTA band
+   15. CTA band
    ========================================================================== */
 .cta-band {
   position: relative;
@@ -1371,7 +1269,7 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
 .cta-foot svg { width: 16px; height: 16px; color: var(--red-bright); }
 
 /* ==========================================================================
-   17. Footer
+   16. Footer
    ========================================================================== */
 .site-footer {
   background: var(--paper-2);
@@ -1424,7 +1322,7 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
 .footer-bottom a:hover { color: var(--ink-text); }
 
 /* ==========================================================================
-   18. Sticky actions
+   17. Sticky actions
    ========================================================================== */
 /* WhatsApp green is used here deliberately — it is the one control people scan
    for; brand red stays on the page CTAs. */
@@ -1493,7 +1391,7 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
 .mobile-bar .mb-wa span { color: #fff; }
 
 /* ==========================================================================
-   19. Inner pages, FAQ, prose
+   18. Inner pages & prose
    ========================================================================== */
 .page-hero {
   position: relative;
@@ -1529,49 +1427,6 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
 .breadcrumbs svg { width: 14px; height: 14px; opacity: 0.6; }
 .breadcrumbs [aria-current='page'] { color: #fff; }
 
-.faq { display: grid; gap: 0.75rem; }
-.faq-item {
-  border-radius: var(--radius);
-  border: 1px solid var(--card-border);
-  background: var(--card);
-  overflow: hidden;
-  transition: border-color var(--t) var(--ease);
-}
-.faq-item:hover, .faq-item.is-open { border-color: var(--card-border-hover); }
-.faq-q {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  padding: 1.2rem 1.25rem;
-  text-align: left;
-  cursor: pointer;
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  color: var(--fg);
-}
-.faq-q svg {
-  width: 20px; height: 20px;
-  flex: none;
-  color: var(--accent-text);
-  transition: transform var(--t) var(--ease);
-}
-.faq-q[aria-expanded='true'] svg { transform: rotate(180deg); }
-/* visibility keeps the collapsed answer out of the a11y tree and tab order
-   while still allowing the height to animate */
-.faq-a {
-  display: grid;
-  grid-template-rows: 0fr;
-  visibility: hidden;
-  transition: grid-template-rows var(--t) var(--ease), visibility var(--t) var(--ease);
-}
-.faq-a > div { overflow: hidden; }
-.faq-item.is-open .faq-a { grid-template-rows: 1fr; visibility: visible; }
-.faq-a p { padding: 0 1.25rem 1.3rem; font-size: 0.93rem; color: var(--dim); line-height: 1.68; }
-
 .prose { max-width: 70ch; }
 .prose h2 { font-size: 1.35rem; margin-top: 2.25rem; margin-bottom: 0.75rem; }
 .prose h2:first-child { margin-top: 0; }
@@ -1590,7 +1445,7 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
 .notfound { min-height: 68vh; display: grid; place-items: center; text-align: center; }
 
 /* ==========================================================================
-   20. Motion / reveal
+   19. Motion / reveal
    ========================================================================== */
 [data-reveal] {
   opacity: 0;
@@ -1633,6 +1488,6 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
     justify-content: center;
   }
   .marquee-track > [data-mq-clone] { display: none; }
-  .btn:hover, .gcard:hover, .step:hover, .contact-tile:hover,
+  .btn:hover, .gcard:hover, .step:hover,
   .brand-chip:hover, .detail-row:hover, .wa-fab:hover { transform: none; }
 }
