@@ -320,7 +320,25 @@ use. The note under the marquee says exactly that, and the logos are drawn in a
 single flat colour rather than each brand's official colours, which keeps clear
 of brand style guidelines. Removing one is a single line in `index.html`.
 
-## 12. What is still worth doing
+## 12. Licence record — keep this
+
+`LICENCE-RECORD.md` (and a printable `LICENCE-RECORD.html`) in the project root
+is a complete record of every photograph, brand mark, typeface and piece of
+artwork on the site: what it is, where it came from, and the licence that permits
+it. It quotes the Pexels licence verbatim as it stood on the compile date,
+records which candidate images were rejected and why, and sets out what to do if
+a claim is ever received.
+
+**If you ever swap an image, add its replacement to section 3 of that record**
+with the new Pexels photo ID and source URL. A record that has drifted out of
+date is worse than no record.
+
+Open `LICENCE-RECORD.html` in a browser and print to PDF if you need something
+to forward.
+
+---
+
+## 13. What is still worth doing
 
 Nothing below blocks going live, but each is worth a few minutes.
 
@@ -358,7 +376,7 @@ DNS steps for when you are ready.
 
 ---
 
-## 12. Clean URLs (optional)
+## 14. Clean URLs (optional)
 
 Links keep the `.html` extension so the site works opened straight from disk and
 never triggers a redirect. The home page is `/` either way.
