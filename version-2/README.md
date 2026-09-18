@@ -237,10 +237,15 @@ That workflow is **inert in the main repo** — GitHub only reads workflows from
 `.github/workflows/` at the repository root, and there it sits one level down.
 In the demo repo it is at the root, so it publishes `public/` on every push.
 
-If the first run fails at "Configure Pages" with *Resource not accessible by
-integration*, Pages has never been switched on for that repo: go to
-**Settings → Pages → Build and deployment → Source → GitHub Actions**, then
-re-run the workflow. (The same thing happened with version 1.)
+**Pages is already switched on** for the demo repo, with the source set to
+GitHub Actions — so pushes just publish and nothing else needs doing.
+
+It did fail once on the very first run, at "Configure Pages" with *Resource not
+accessible by integration*. That is the workflow's `enablement: true` trying to
+create the Pages site with a token that is read-only by default; version 1 hit
+the same wall. If it ever comes back — a new fork, a transferred repo — the fix
+is **Settings → Pages → Build and deployment → Source → GitHub Actions**, then
+re-run the workflow.
 
 ### Before sharing either demo URL
 
