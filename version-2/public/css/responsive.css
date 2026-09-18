@@ -180,6 +180,10 @@
   /* ---- devices: a rail, so three cards cost one card's height ---- */
   #repair .grid {
     display: grid;
+    /* .g-3 still sets repeat(3, 1fr) here, and an explicit template beats
+       grid-auto-columns — two of the three tracks collapsed to 16px. Clear
+       it so every card flows into an implicit 78% column. */
+    grid-template-columns: none;
     grid-auto-flow: column;
     grid-auto-columns: 78%;
     gap: 0.8rem;
