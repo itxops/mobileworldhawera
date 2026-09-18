@@ -52,8 +52,9 @@ comment:
 5. Why Choose MW Hawera — workshop photo + 6 benefits (`id="why"`)
 6. Testimonials — one compact sliding row (`id="reviews"`)
 7. Accessories — 5 photo cards (`id="accessories"`)
-8. Come see us in Hawera — map, details, hours (`id="contact"`)
-9. Closing call-to-action
+8. Frequently asked questions (`id="faq"`)
+9. Come see us in Hawera — map, details, hours (`id="contact"`)
+10. Closing call-to-action
 
 There is **no contact form** — removed at the owner's request. Every call to
 action goes straight to WhatsApp, the phone, or directions.
@@ -318,6 +319,44 @@ only to identify which devices the shop repairs, which is ordinary nominative
 use. The note under the marquee says exactly that, and the logos are drawn in a
 single flat colour rather than each brand's official colours, which keeps clear
 of brand style guidelines. Removing one is a single line in `index.html`.
+
+## 12. What is still worth doing
+
+Nothing below blocks going live, but each is worth a few minutes.
+
+### Needs something from you
+
+| | Why it matters |
+|---|---|
+| **A photo of the shopfront** | A real photo of 184 High Street beats every stock image on the page for trust, and Google favours genuine premises photos for local ranking. `index.html` has a commented block in the contact section showing exactly where it goes and what to name it. |
+| **Google Business Profile + Facebook links** | There are no social links yet, and the reviews button goes to a Maps *search* rather than your listing. For a local repair shop the GBP drives more calls than the website. Send the URLs and they go in the footer, the reviews button, and the `sameAs` structured data. |
+| **Indicative prices** | People search "iPhone screen repair price Hawera". Even "Screen replacement from \$XX" converts well and filters out time-wasters. |
+| **Privacy and Terms detail** | Both pages still show a "To complete:" box — warranty period, deposits, payment methods, how long uncollected devices are held. |
+| **Your own Google rating** | Once the Hawera listing has reviews, the hero pill can go back to "5.0 rating on Google" — one line in `index.html`. |
+
+### Analytics — ready, switched off
+
+`index.html` (and every page) carries a commented-out Google Analytics 4 block
+just above the stylesheet links. It is free and does not affect hosting costs.
+To switch it on: create a property at analytics.google.com, then paste your
+`G-XXXXXXXXXX` id into **both** places in that block and uncomment it, on every page.
+
+Two things to do at the same time, both noted in the comment itself:
+
+1. Add a line to `privacy.html` saying you use Google Analytics.
+2. Add `https://www.googletagmanager.com` to `script-src` and
+   `https://www.google-analytics.com` to `connect-src` in the
+   Content-Security-Policy in `firebase.json` — otherwise the script is blocked
+   and you will see nothing.
+
+### Connecting the domain
+
+`mobileworldhawera.co.nz` is not connected yet. The canonical and Open Graph
+tags already point there, so the GitHub Pages URL is a **demo only** — do not
+submit it to Google, or you will create a canonical conflict. Section 6 has the
+DNS steps for when you are ready.
+
+---
 
 ## 12. Clean URLs (optional)
 

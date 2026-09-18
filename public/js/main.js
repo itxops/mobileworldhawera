@@ -6,8 +6,10 @@
    1. header()   sticky / blurred header state
    2. drawer()   mobile navigation drawer (focus trap, Esc, scroll lock)
    3. reveal()   IntersectionObserver scroll animations
-   4. spotlight() cursor-following highlight on cards
-   5. misc()      footer year, external link hygiene
+   4. faq()       accessible accordion
+   5. marquees()  pause the sliding rows while they are off screen
+   6. spotlight() cursor-following highlight on cards
+   7. misc()      footer year, external link hygiene
    ========================================================================== */
 (function () {
   'use strict';
@@ -177,7 +179,47 @@
   }
 
   /* ======================================================================
-     4. Card spotlight
+     4. FAQ accordion
+     ====================================================================== */
+  function faq() {
+    var buttons = $$('.faq-q');
+    if (!buttons.length) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.faq-item');
+        var isOpen = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        // The answer collapses via CSS (grid-template-rows + visibility), so
+        // there is no hidden attribute to juggle here.
+        item.classList.toggle('is-open', !isOpen);
+      });
+    });
+  }
+
+  /* ======================================================================
+     5. Marquees
+     The brand and review rows loop forever. Left running while scrolled past,
+     they keep a compositing layer animating for nothing — which on a phone is
+     wasted battery. Pause them whenever they are off screen.
+     ====================================================================== */
+  function marquees() {
+    var tracks = $$('.marquee-track');
+    if (!tracks.length || !('IntersectionObserver' in window)) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var track = entry.target.querySelector('.marquee-track');
+        if (!track) return;
+        track.style.animationPlayState = entry.isIntersecting ? '' : 'paused';
+      });
+    }, { rootMargin: '200px 0px' });
+
+    $$('.marquee').forEach(function (el) { io.observe(el); });
+  }
+
+  /* ======================================================================
+     6. Card spotlight
      Feeds the cursor position into --mx/--my so the CSS radial highlight can
      follow it. Pointer-only, rAF-throttled, and skipped entirely on touch
      devices and when reduced motion is requested.
@@ -212,7 +254,7 @@
   }
 
   /* ======================================================================
-     5. Odds and ends
+     7. Odds and ends
      ====================================================================== */
   function misc() {
     $$('[data-year]').forEach(function (el) {
@@ -231,6 +273,8 @@
     header();
     drawer();
     reveal();
+    faq();
+    marquees();
     spotlight();
     misc();
   }

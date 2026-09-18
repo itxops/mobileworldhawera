@@ -171,6 +171,8 @@ html {
 }
 
 body {
+  /* the default blue/grey tap flash looks broken over dark cards */
+  -webkit-tap-highlight-color: rgba(221, 49, 45, 0.14);
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.65;
@@ -1335,13 +1337,16 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
    ========================================================================== */
 /* WhatsApp green is used here deliberately — it is the one control people scan
    for; brand red stays on the page CTAs. */
+/* Hidden while the bottom action bar is on screen — the bar already carries a
+   WhatsApp tile, and two floating controls just cover the content. */
 .wa-fab {
+  /* none until the 900px breakpoint brings it back as `grid` */
+  display: none;
+  place-items: center;
   position: fixed;
   right: 1rem;
-  bottom: calc(1rem + var(--mobile-bar-h, 0px));
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   z-index: 90;
-  display: grid;
-  place-items: center;
   width: 56px; height: 56px;
   border-radius: 50%;
   background: linear-gradient(135deg, #2ee277, #1fbb57);
@@ -1362,6 +1367,7 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
   70%, 100% { transform: scale(1.5); opacity: 0; }
 }
 .wa-fab:hover { transform: scale(1.08); }
+.wa-fab svg { pointer-events: none; }
 .wa-fab svg { width: 30px; height: 30px; position: relative; z-index: 1; }
 
 .mobile-bar {
@@ -1435,6 +1441,49 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
 .breadcrumbs a:hover { color: #fff; }
 .breadcrumbs svg { width: 14px; height: 14px; opacity: 0.6; }
 .breadcrumbs [aria-current='page'] { color: #fff; }
+
+.faq { display: grid; gap: 0.75rem; max-width: 820px; margin-inline: auto; }
+.faq-item {
+  border-radius: var(--radius);
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  overflow: hidden;
+  transition: border-color var(--t) var(--ease);
+}
+.faq-item:hover, .faq-item.is-open { border-color: var(--card-border-hover); }
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.15rem 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}
+.faq-q svg {
+  width: 20px; height: 20px;
+  flex: none;
+  color: var(--accent-text);
+  transition: transform var(--t) var(--ease);
+}
+.faq-q[aria-expanded='true'] svg { transform: rotate(180deg); }
+/* visibility keeps a collapsed answer out of the a11y tree and the tab order
+   while still letting the height animate */
+.faq-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows var(--t) var(--ease), visibility var(--t) var(--ease);
+}
+.faq-a > div { overflow: hidden; }
+.faq-item.is-open .faq-a { grid-template-rows: 1fr; visibility: visible; }
+.faq-a p { padding: 0 1.25rem 1.25rem; font-size: 0.93rem; color: var(--dim); line-height: 1.68; }
 
 .prose { max-width: 70ch; }
 .prose h2 { font-size: 1.35rem; margin-top: 2.25rem; margin-bottom: 0.75rem; }
