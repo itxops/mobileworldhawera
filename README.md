@@ -322,8 +322,13 @@ of brand style guidelines. Removing one is a single line in `index.html`.
 
 ## 12. Licence record — keep this
 
-`LICENCE-RECORD.md` (and a printable `LICENCE-RECORD.html`) in the project root
-is a complete record of every photograph, brand mark, typeface and piece of
+The project root holds the same record in four formats — `LICENCE-RECORD.docx`
+(Word, editable), `LICENCE-RECORD.pdf` (fixed, the one to forward),
+`LICENCE-RECORD.html` (printable) and `LICENCE-RECORD.md` (plain text, diffs
+cleanly in git). All four carry identical content and identical section numbers,
+so "section 3" means the same thing in each.
+
+It is a complete record of every photograph, brand mark, typeface and piece of
 artwork on the site: what it is, where it came from, and the licence that permits
 it. It quotes the Pexels licence verbatim as it stood on the compile date,
 records which candidate images were rejected and why, and sets out what to do if
@@ -333,8 +338,10 @@ a claim is ever received.
 with the new Pexels photo ID and source URL. A record that has drifted out of
 date is worse than no record.
 
-Open `LICENCE-RECORD.html` in a browser and print to PDF if you need something
-to forward.
+**Send `LICENCE-RECORD.pdf`** if a claimant or a lawyer ever asks for proof — it
+is fixed, paginated and opens anywhere. Edit `LICENCE-RECORD.docx` in Word when
+you need to add a row after swapping an image, then update the `.md` and `.html`
+copies to match so the four do not drift apart.
 
 ---
 
