@@ -1,0 +1,18 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
+
+# Firebase local state (safe to regenerate; may hold machine-specific paths)
+.firebase/
+firebase-debug.log
+*.log
+
+# Node, if tooling is ever added here
+node_modules/
+
+# Scratch
+.tmp/
