@@ -65,6 +65,28 @@ Below 960px the stage is dropped entirely and each row carries its own
 thumbnail. The hidden images are lazy-loaded, so a phone never downloads the
 desktop set.
 
+### On a phone, blocks change shape rather than just shrinking
+
+The first cut of this page was **12,893px** tall at 390px wide — about fifteen
+screens of scrolling — because every section had the same shape: a big heading,
+a lead paragraph, then a single column of identical full-width cards. It read as
+endless. It is now **9,110px**, a 29% cut, with nothing removed.
+
+Three patterns did the work:
+
+| Pattern | Where | Before → after |
+|---|---|---|
+| **Media rows** — square photo or icon on the left, text on the right | the six repairs; the six benefits | services 2,462 → 1,049px |
+| **Rails** — scroll sideways instead of stacking | what we repair; accessories | devices 1,145 → 582px |
+| **Two columns** — short items go 2-up | footer links | footer 1,617 → 1,195px |
+
+Plus a badge-beside-text layout for the four steps (856 → 580px) and tighter
+section headings throughout.
+
+**Nothing is hidden from phone users to get there.** All 17 photographs, every
+description and every link are still on the page — they are just arranged for a
+hand instead of a desk.
+
 ### Other layout changes
 
 | Section | Version 1 | Version 2 |
@@ -142,6 +164,10 @@ Version 2 passes all of them. Five things it caught along the way:
 - the hero and contact labels ran inline — "ADDRESS 184 High Street Hawera
   4610" on one line
 - the bento grid left an empty cell in its last row
+- during the mobile rework, three children in a two-column grid auto-flowed the
+  paragraph into the 46px **badge** column, wrapping one sentence to nine lines.
+  Measuring caught it: the section got *taller*, 856 → 1,537px. Every cell in
+  those grids is now placed explicitly.
 
 Current first-load weight, gzipped where it applies:
 
