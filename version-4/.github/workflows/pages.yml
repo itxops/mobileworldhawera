@@ -5,13 +5,13 @@
 # lives under version-2/. It becomes the root workflow in the version 2 repo,
 # which is pushed with:
 #
-#   git subtree push --prefix=version-2 v2 main
+#   git subtree push --prefix=version-4 v4 main
 #
 # If it does nothing on the first run, Pages has not been switched on yet:
 #   Settings -> Pages -> Build and deployment -> Source -> "GitHub Actions"
 #
 # Once enabled the demo is live at
-#   https://itxops.github.io/-itxops-MWhawera-v4/
+#   https://itxops.github.io/MWhawera-v3/
 name: Deploy version 4 to GitHub Pages
 
 on:
