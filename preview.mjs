@@ -9,6 +9,7 @@
        /v1/         version 1  (public/)
        /v2/         version 2  (version-2/public/)
        /v3/         version 3  (version-3/public/)
+       /v4/         version 4  (version-4/public/)
 
    Uses only Node's own modules — nothing to install, and it never touches the
    network. This is a preview tool for the desktop; it is not what gets
@@ -26,6 +27,7 @@ const ROOTS = {
   v1: path.join(ROOT, 'public'),
   v2: path.join(ROOT, 'version-2', 'public'),
   v3: path.join(ROOT, 'version-3', 'public'),
+  v4: path.join(ROOT, 'version-4', 'public'),
 };
 
 const TYPES = {
@@ -89,6 +91,7 @@ const shell = (title, body) => `<!doctype html>
   .t2 { background: rgba(80,140,255,.15); color: #7aa7ff; }
   .t3 { background: rgba(255,255,255,.08); color: #bbb; }
   .t4 { background: rgba(52,199,123,.16); color: #5fd79b; }
+  .t5 { background: rgba(224,71,61,.18); color: #ff8079; }
   footer { margin-top: 3rem; color: #6d6d78; font-size: .84rem; }
   code { background: #17171c; padding: .15rem .4rem; border-radius: 5px; color: #d0d0d8; }
 </style></head><body>${body}</body></html>`;
@@ -116,6 +119,12 @@ const indexPage = () => shell('Mobile World Hawera — preview', `
       <h2>The fresh one</h2>
       <p>Built mobile-first from scratch after both earlier designs were rejected.
          Start here.</p>
+    </a>
+    <a class="card" href="/v4/">
+      <span class="tag t5">Version 4</span>
+      <h2>The irepair look</h2>
+      <p>Built to the UI of irepair.co.nz, which you picked, carrying your own
+         Alexandra content. Start here.</p>
     </a>
     <a class="card" href="/compare">
       <span class="tag t3">Compare</span>
@@ -172,18 +181,20 @@ const comparePage = () => shell('Side by side', `
     <h2><select data-pane="p1">
       <option value="/v1/">Version 1 — light &amp; clean</option>
       <option value="/v2/">Version 2 — workshop</option>
-      <option value="/v3/" selected>Version 3 — the fresh one</option>
+      <option value="/v3/">Version 3 — the fresh one</option>
+      <option value="/v4/" selected>Version 4 — the irepair look</option>
     </select></h2>
-    <iframe src="/v3/" title="Left pane"></iframe>
+    <iframe src="/v4/" title="Left pane"></iframe>
   </div>
   <div class="split" id="split"></div>
   <div class="pane" id="p2">
     <h2><select data-pane="p2">
       <option value="/v1/">Version 1 — light &amp; clean</option>
       <option value="/v2/" selected>Version 2 — workshop</option>
-      <option value="/v3/">Version 3 — the fresh one</option>
+      <option value="/v3/" selected>Version 3 — the fresh one</option>
+      <option value="/v4/">Version 4 — the irepair look</option>
     </select></h2>
-    <iframe src="/v2/" title="Right pane"></iframe>
+    <iframe src="/v3/" title="Right pane"></iframe>
   </div>
 </div>
 <script>
@@ -233,7 +244,7 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/') return send(res, 200, TYPES['.html'], indexPage());
   if (pathname === '/compare') return send(res, 200, TYPES['.html'], comparePage());
 
-  const m = pathname.match(/^\/(v1|v2|v3)(\/.*)?$/);
+  const m = pathname.match(/^\/(v1|v2|v3|v4)(\/.*)?$/);
   if (!m) return send(res, 404, 'text/plain', 'Not found. Try / or /compare');
 
   const base = ROOTS[m[1]];
