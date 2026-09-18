@@ -3,6 +3,12 @@
 A second design for the same website, built so there is a real choice to make
 rather than one option to approve.
 
+**Live demo:** <https://itxops.github.io/-itxops-MWhawera-v2/>
+**Version 1 demo:** <https://itxops.github.io/mobileworldhawera/>
+
+Both are demos for showing the client. Neither is the real site — see §7 before
+sending either URL anywhere that Google can see it.
+
 **Nothing about the business changes between the two versions.** Same copy, same
 17 photographs, same logo, same phone numbers, same opening hours, same legal
 pages. The differences are layout, colour and interaction — which is what makes
@@ -140,18 +146,22 @@ where both marquees become manually scrollable rows instead of vanishing.
 
 ## 5. If you pick this version
 
-Nothing is wired up to deploy yet — this folder is a local proposal. To go live
-with it, do **one** of these:
+There is already a demo of this version on GitHub Pages (§7), but a demo is not
+the real site. To make version 2 the actual website, do **one** of these:
 
-**Firebase.** From `version-2/`, run `firebase deploy`. The `firebase.json` here
-is the same config version 1 uses, and its hosting root already points at this
-folder's `public/`.
+**Firebase — the real deploy.** From `version-2/`, run `firebase deploy`. The
+`firebase.json` here is the same config version 1 uses, and its hosting root
+already points at this folder's `public/`. This is what goes on
+`mobileworldhawera.co.nz` once the domain is connected.
 
-**GitHub Pages.** Edit `.github/workflows/pages.yml` in the project root and
-change the upload path from `public` to `version-2/public`.
+**Make it the only version.** Replace the root `public/` with `version-2/public`,
+delete this folder, and archive the version 2 demo repo. Cleanest long term —
+one copy of the site, one repo, one deploy, and the main workflow keeps working
+untouched.
 
-**Make it the only version.** Replace the root `public/` with `version-2/public`
-and delete this folder. Cleanest long term, and nothing else needs touching.
+**Just repoint the main Pages demo.** Edit `.github/workflows/pages.yml` in the
+project root and change the upload path from `public` to `version-2/public`.
+Useful if you want the original demo URL to show version 2 instead.
 
 Either way the outstanding items from the main README still apply to this
 version too: the real shopfront photo, the Google Business Profile and Facebook
@@ -164,6 +174,9 @@ analytics.
 
 ```
 version-2/
+├── .github/workflows/
+│   └── pages.yml            publishes the demo — inert here, root-level in
+│                            the version 2 repo (see section 7)
 ├── firebase.json            hosting config (same as version 1)
 └── public/                  everything that gets deployed
     ├── index.html           the whole single-page site
@@ -176,3 +189,69 @@ version-2/
     ├── images/              the same 17 photographs, unchanged
     └── assets/              the same fonts and logo, unchanged
 ```
+
+---
+
+## 7. How this folder reaches its own repository
+
+Version 2 lives in **two** places, and they are the same files:
+
+| Where | What it is |
+|---|---|
+| `version-2/` inside `itxops/mobileworldhawera` | the working copy — edit here |
+| `itxops/-itxops-MWhawera-v2` | a publishing mirror, whose **root** is this folder |
+
+The mirror is not a copy you maintain by hand. It is produced from this folder's
+own history with `git subtree`, so the two cannot drift apart.
+
+### Publishing a change
+
+Edit files in `version-2/`, commit them to the main repo as normal, then:
+
+```
+git push origin main                              # the working repo
+git subtree push --prefix=version-2 v2 main       # the demo repo
+```
+
+If the `v2` remote is not set up on a machine yet:
+
+```
+git remote add v2 https://github.com/itxops/-itxops-MWhawera-v2.git
+```
+
+`git subtree push` re-reads the whole history of `version-2/` each time, so it
+is slower than a normal push. That is expected, not a hang.
+
+### What the demo repo contains
+
+The subtree push makes this folder the repository root, so over there:
+
+```
+README.md                      this file
+firebase.json                  hosting config
+public/                        the site
+.github/workflows/pages.yml    ← was version-2/.github/workflows/pages.yml
+```
+
+That workflow is **inert in the main repo** — GitHub only reads workflows from
+`.github/workflows/` at the repository root, and there it sits one level down.
+In the demo repo it is at the root, so it publishes `public/` on every push.
+
+If the first run fails at "Configure Pages" with *Resource not accessible by
+integration*, Pages has never been switched on for that repo: go to
+**Settings → Pages → Build and deployment → Source → GitHub Actions**, then
+re-run the workflow. (The same thing happened with version 1.)
+
+### Before sharing either demo URL
+
+Both demos carry `<link rel="canonical">` and Open Graph tags pointing at
+`mobileworldhawera.co.nz`, because that is where the site is eventually going.
+While the domain is not connected, that means:
+
+- **Do not submit either URL to Google Search Console**, and do not link to them
+  from anywhere public. Two demos of identical content, both claiming a
+  canonical that does not resolve, is exactly the situation that causes
+  duplicate-content trouble later.
+- Sending the links directly to the client is fine. That is what they are for.
+- Once a version is chosen and the real domain is connected, delete or archive
+  the losing demo repo so only one copy of this content stays online.
