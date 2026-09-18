@@ -5,6 +5,13 @@ Single-page website for **Mobile World Hawera**, 184 High Street, Hawera 4610, N
 Plain HTML5, CSS3 and vanilla JavaScript. No framework, no build step, no backend —
 ready to deploy to Firebase Hosting on the free **Spark** plan exactly as it is.
 
+> **There are two designs to choose between.** This README describes version 1,
+> the light design in `public/`. A second design lives in `version-2/` — same
+> content, same photographs, same logo, different layout. Run `node preview.mjs`
+> and open <http://localhost:5173/compare> to see them side by side, then read
+> [`version-2/README.md`](version-2/README.md). Section 15 has the short
+> comparison.
+
 ---
 
 ## 1. Project layout
@@ -392,3 +399,50 @@ For `/privacy` instead of `/privacy.html`, set `"cleanUrls": true` in
 `firebase.json` — but then also drop `.html` from the links to the legal pages,
 from their `<link rel="canonical">` tags and from `sitemap.xml`, or every click
 costs a 301.
+
+---
+
+## 15. The second design
+
+`version-2/` holds an alternative design for the same site. It exists so there
+is a choice to make, not just one option to approve.
+
+**Identical in both:** every word of copy, all 17 photographs, the logo, the
+phone numbers, the opening hours, the legal pages, the tech (static HTML/CSS/JS)
+and the cost (free on Spark or Pages).
+
+**Different in version 2:** it runs dark from the hero down to Why Choose Us and
+light from Accessories onward; the six repairs become one interactive list with
+a sticky image stage that follows your pointer, each row opening WhatsApp with
+that repair pre-written; the hero is a full-bleed photograph rather than a split;
+accessories sit on a horizontal snap rail; and the logo sits on a white plate
+wherever the ground is dark, so the supplied artwork is never recoloured.
+
+### Comparing them locally
+
+```
+node preview.mjs
+```
+
+| URL | |
+|---|---|
+| <http://localhost:5173/> | chooser |
+| <http://localhost:5173/v1/> | version 1 — this one |
+| <http://localhost:5173/v2/> | version 2 |
+| <http://localhost:5173/compare> | both at once, draggable divider, phone/tablet width presets |
+
+`preview.mjs` is a ~150-line static file server using only Node's built-in
+modules. Nothing to install, no network access, and it is a desktop tool only —
+it is not part of either deployment.
+
+### Deciding
+
+Nothing is wired up to deploy version 2; it is a local proposal. Version 1 is
+still what GitHub Pages publishes, and the live demo is unchanged. If version 2
+is the one, `version-2/README.md` §5 lists the three ways to switch — the
+cleanest being to replace `public/` with `version-2/public`.
+
+Both versions pass the same QA harness: four pages at twelve widths, checking
+overflow, tap targets, heading order, alt text, dead links, rendered WCAG AA
+contrast, reveal firing, marquee integrity, the drawer focus trap, the
+reduced-motion fallback and console errors.
