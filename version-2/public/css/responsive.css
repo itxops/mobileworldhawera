@@ -61,16 +61,15 @@
   .svc-stage { display: none; }
 
   .svc-row {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr;
     grid-template-areas:
-      'num body go'
-      'thumb thumb thumb';
+      'num body'
+      'thumb thumb';
     row-gap: 1.1rem;
     padding-block: 1.4rem;
   }
   .svc-num { grid-area: num; }
   .svc-row > .svc-body { grid-area: body; }
-  .svc-go { grid-area: go; }
   .svc-thumb { display: block; grid-area: thumb; }
   /* The sliding indent fights a tap on touch screens. And the "active" state
      exists to drive the image stage — with the stage gone, a permanently
@@ -79,12 +78,6 @@
   .svc-row.is-active, .svc-row:hover { padding-left: 0.4rem; background: none; }
   .svc-row.is-active::before, .svc-row:hover::before { transform: scaleY(0); }
   .svc-row.is-active .svc-num { color: var(--fg-muted); }
-  .svc-row.is-active .svc-go {
-    background: none;
-    border-color: var(--line);
-    color: var(--fg-muted);
-    transform: none;
-  }
 
   .bento { grid-template-columns: repeat(2, 1fr); }
   .bento-photo { grid-row: span 1; grid-column: span 2; min-height: 280px; }
@@ -206,8 +199,8 @@
      right. Same six photographs, same six descriptions, about a third of the
      height of the stacked version. */
   .svc-row {
-    grid-template-columns: 92px 1fr auto;
-    grid-template-areas: 'thumb body go';
+    grid-template-columns: 92px 1fr;
+    grid-template-areas: 'thumb body';
     align-items: center;
     column-gap: 0.85rem;
     row-gap: 0;
@@ -223,8 +216,6 @@
   .svc-thumb img { aspect-ratio: 1 / 1; }
   .svc-title { font-size: 1.02rem; margin-bottom: 0.2rem; }
   .svc-desc { font-size: 0.82rem; line-height: 1.5; }
-  .svc-go { width: 32px; height: 32px; align-self: center; }
-  .svc-go svg { width: 14px; height: 14px; }
 
   /* ---- how it works: badge beside the text, not above it ---- */
   .steps { grid-template-columns: 1fr; gap: 0.4rem; }
@@ -323,7 +314,7 @@
   .pill svg { width: 15px; height: 15px; }
 
   #repair .grid { grid-auto-columns: 84%; }
-  .svc-row { grid-template-columns: 80px 1fr auto; column-gap: 0.75rem; }
+  .svc-row { grid-template-columns: 80px 1fr; column-gap: 0.75rem; }
   .svc-thumb { width: 80px; }
   .rail { grid-auto-columns: minmax(210px, 1fr); }
   .quote { width: min(272px, 82vw); }
@@ -336,7 +327,7 @@
   .mobile-bar .btn svg { width: 16px; height: 16px; }
   .brand img { height: 23px; }
   .brand-chip { padding-inline: 1.1rem; }
-  .svc-row { grid-template-columns: 72px 1fr auto; }
+  .svc-row { grid-template-columns: 72px 1fr; }
   .svc-thumb { width: 72px; }
   .footer-grid { gap: 1.4rem 0.9rem; }
   .footer-col .f-nav a { font-size: 0.82rem; padding-block: 0.71rem; }

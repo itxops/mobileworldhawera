@@ -707,7 +707,7 @@ h1, h2, h3, h4 {
 .svc-row {
   position: relative;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: clamp(0.9rem, 2vw, 1.5rem);
   width: 100%;
@@ -758,25 +758,6 @@ h1, h2, h3, h4 {
   margin-bottom: 0.25rem;
 }
 .svc-desc { display: block; font-size: 0.89rem; line-height: 1.6; color: var(--fg-muted); max-width: 46ch; }
-
-.svc-go {
-  display: grid;
-  place-items: center;
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  color: var(--fg-muted);
-  transition: transform var(--t) var(--ease-out), background var(--t) var(--ease),
-              color var(--t) var(--ease), border-color var(--t) var(--ease);
-}
-.svc-go svg { width: 16px; height: 16px; }
-.svc-row.is-active .svc-go,
-.svc-row:hover .svc-go {
-  background: var(--red-btn);
-  border-color: transparent;
-  color: #fff;
-  transform: translateX(4px);
-}
 
 /* thumbnail shown instead of the stage on narrow screens */
 .svc-thumb { display: none; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
