@@ -1590,14 +1590,27 @@ a.detail-row:hover { border-color: var(--accent-text); transform: translateX(4px
   }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
   .floaty, .hero-bg .b1, .hero-bg .b2, .wa-fab::after { animation: none; }
-  /* a paused marquee would hide most of its cards, so lay them out as a wrap */
-  .marquee { -webkit-mask-image: none; mask-image: none; overflow: visible; }
-  .marquee-track {
-    animation: none;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: center;
+  /* Still a slider, just one the reader drives. Auto-motion stops (that is
+     the point of the preference), but the row scrolls sideways by swipe or
+     scrollbar and snaps card to card. A wrapped grid would balloon the
+     deliberately compact testimonials band. */
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 0.6rem;
   }
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+    width: max-content;
+    padding-inline: var(--gutter);
+  }
+  .marquee-track > * { scroll-snap-align: start; }
   .marquee-track > [data-mq-clone] { display: none; }
   .btn:hover, .gcard:hover, .step:hover,
   .brand-chip:hover, .detail-row:hover, .wa-fab:hover { transform: none; }
