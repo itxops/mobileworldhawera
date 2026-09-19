@@ -421,6 +421,18 @@ p { max-width: var(--measure); }
   display: flex; align-items: center; min-height: 44px; font-size: var(--fs-small);
 }
 .foot li a:hover { color: var(--paper); }
+
+.foot-find li a, .foot-find li > span { gap: 12px; }
+.f-icon {
+  display: grid; place-items: center; flex: none;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .22);
+  color: rgba(255, 255, 255, .78);
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+.f-icon svg { width: 15px; height: 15px; }
+.foot-find li a:hover .f-icon { background: var(--red-ink); border-color: var(--red-ink); color: #fff; }
 .foot-end {
   margin-top: var(--s-5); padding-top: var(--s-3);
   border-top: 1px solid rgba(255, 255, 255, 0.16);
@@ -437,7 +449,7 @@ p { max-width: var(--measure); }
 @media (min-width: 720px) {
   :root { --gutter: 40px; --section: 104px; }
 
-  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); border-bottom: 1px solid var(--rule); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); border-bottom: 1px solid rgba(255,255,255,.22); }
   .facts li { border-bottom: 0; }
 
   .devices { grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
@@ -776,9 +788,12 @@ p { max-width: var(--measure); }
   border-radius: 20px;
   box-shadow: 0 1px 3px rgba(26, 34, 56, .06);
   overflow: hidden;
+  transition: transform .22s ease, box-shadow .22s ease;
 }
+.rep-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px -10px rgba(26, 34, 56, .18); }
 .rep-shot { position: relative; }
-.rep-shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.rep-shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform .5s ease; }
+.rep-card:hover .rep-shot img { transform: scale(1.05); }
 .rep-tile {
   position: absolute; left: 18px; bottom: -22px;
   display: grid; place-items: center;
@@ -840,7 +855,9 @@ p { max-width: var(--measure); }
   border: 1px solid var(--rule);
   background: #fff;
   overflow: hidden;
+  transition: transform .22s ease, border-color .22s ease;
 }
+.hiw-step:hover { transform: translateY(-4px); border-color: rgba(221, 49, 45, .35); }
 .hiw-step::after {
   content: attr(data-num);
   position: absolute; right: 12px; top: 4px;
@@ -908,6 +925,7 @@ p { max-width: var(--measure); }
    ========================================================================== */
 .brands-band { padding-block: 40px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
 .brands-band .pill-tag { display: flex; margin-inline: auto; width: max-content; margin-bottom: 28px; }
+.brand-marquee { padding-block: 8px; }
 .brand-marquee .marquee-track { --mq: 34s; gap: 0; }
 .brand-chip {
   display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -918,8 +936,11 @@ p { max-width: var(--measure); }
   border: 1px solid var(--rule);
   background: #fff;
   font-size: 1.05rem; font-weight: 700; letter-spacing: .01em; color: var(--ink);
+  transition: transform .2s ease, border-color .2s ease, color .2s ease;
 }
-.brand-chip svg { width: 22px; height: 22px; opacity: .82; }
+.brand-chip svg { width: 22px; height: 22px; opacity: .82; transition: opacity .2s ease; }
+.brand-chip:hover { transform: translateY(-3px); border-color: var(--red-ink); color: var(--red-ink); }
+.brand-chip:hover svg { opacity: 1; }
 .brands-band .note { margin: 28px auto 0; text-align: center; }
 
 /* ==========================================================================
@@ -927,7 +948,7 @@ p { max-width: var(--measure); }
        page's tokens. Font stays Arial.
    ========================================================================== */
 #reviews { background: #F8FAFC; }
-.review-marquee { --mq: 78s; padding-block: 4px 22px; }
+.review-marquee { --mq: 78s; padding-block: 10px 22px; }
 .review-marquee .marquee-track { gap: 0; }
 .rev-card {
   width: 300px; flex: none;
@@ -938,7 +959,9 @@ p { max-width: var(--measure); }
   border: 1px solid var(--card-line);
   border-radius: 20px;
   box-shadow: 0 1px 3px rgba(26, 34, 56, .06);
+  transition: transform .22s ease, box-shadow .22s ease;
 }
+.rev-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px -10px rgba(26, 34, 56, .18); }
 .rev-card .stars { display: flex; gap: 2px; color: #E8A317; margin-bottom: 12px; }
 .rev-card .stars svg { width: 16px; height: 16px; }
 .rev-card p { font-size: var(--fs-small); color: var(--body); max-width: none; }
