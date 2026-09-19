@@ -215,7 +215,7 @@ p { max-width: var(--measure); }
 .top-call svg { width: 17px; height: 17px; }
 .top-call .num { display: none; }
 
-.menu { position: relative; }
+.menu { position: relative; margin-left: auto; }
 .menu summary {
   display: grid; place-items: center;
   width: 46px; height: 46px;
@@ -465,6 +465,9 @@ p { max-width: var(--measure); }
    ========================================================================== */
 @media (min-width: 1080px) {
   :root { --gutter: 48px; --section: 136px; }
+
+  /* .top-call takes over the right-alignment job from here up. */
+  .menu { margin-left: 0; }
 
   .hero { padding-block: var(--s-7) var(--s-8); }
   .hero .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-7); align-items: center; }
