@@ -43,15 +43,15 @@
   --red-ink:  #B8342B;  /* any red word at body size   6.0:1 on paper */
   --red-fill: #C93A30;  /* button fills under white    5.4:1 */
 
-  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font: "Manrope", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  --font:         Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --font-display: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
   /* Type. Headings are large and set in a single regular weight — the size
      and the space do the work, not the boldness. */
-  --fs-h1:    clamp(2.75rem, 1.9rem + 3.6vw, 5rem);        /* 44 -> 80 */
-  --fs-h2:    clamp(2.125rem, 1.6rem + 2.2vw, 3.5rem);     /* 34 -> 56 */
-  --fs-h3:    clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);     /* 20 -> 24 */
-  --fs-sub:   clamp(1.125rem, 1.04rem + 0.35vw, 1.375rem); /* 18 -> 22, italic */
+  --fs-h1:    clamp(2.125rem, 1.55rem + 2.4vw, 3.375rem);  /* 34 -> 54 */
+  --fs-h2:    clamp(1.75rem, 1.45rem + 1.3vw, 2.5rem);     /* 28 -> 40 */
+  --fs-h3:    clamp(1.1875rem, 1.12rem + 0.3vw, 1.375rem); /* 19 -> 22 */
+  --fs-sub:   clamp(1.0625rem, 1.02rem + 0.2vw, 1.1875rem);/* 17 -> 19 */
   --fs-body:  1.125rem;   /* 18 */
   --fs-small: 1rem;       /* 16 */
   --fs-label: 0.875rem;   /* 14 — the floor */
@@ -73,27 +73,9 @@
 /* ==========================================================================
    2. Fonts + reset
    ========================================================================== */
-@font-face {
-  font-family: "Instrument Serif";
-  src: url("../assets/fonts/instrumentserif-latin.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Instrument Serif";
-  src: url("../assets/fonts/instrumentserif-italic-latin.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Manrope";
-  src: url("../assets/fonts/manrope-latin-var.woff2") format("woff2-variations");
-  font-weight: 300 800;
-  font-style: normal;
-  font-display: swap;
-}
+/* No web font is downloaded. The owner asked for Arial, so the site uses the
+   font already on every machine — which also means text paints instantly and
+   66KB of font files stopped shipping. */
 
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
@@ -145,9 +127,9 @@ summary::-webkit-details-marker { display: none; }
    ========================================================================== */
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 400;          /* Instrument Serif ships one weight — by design */
-  line-height: 1.04;
-  letter-spacing: -0.015em;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
   color: var(--ink);
   text-wrap: balance;
 }
@@ -157,8 +139,8 @@ h3 { font-size: var(--fs-h3); line-height: 1.2; letter-spacing: -0.01em; }
 
 /* the italic line that sits under a heading — the reference's one real move */
 .sub {
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font);
+  font-style: normal;
   font-size: var(--fs-sub);
   line-height: 1.5;
   color: var(--quiet);
@@ -186,47 +168,80 @@ p { max-width: var(--measure); }
 .head h2 + .sub { margin-top: var(--s-3); }
 
 /* ==========================================================================
-   4. Header — thin, quiet, and it stays out of the way
+   4. Header — the shape of the owner's other store: a red bar carrying the
+      phone number and the hours, then a white bar with the logo, the links
+      and one red Call button.
    ========================================================================== */
+.bar {
+  background: var(--red-fill);
+  color: #fff;
+  font-size: var(--fs-label);
+}
+.bar .wrap {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 2px 28px;
+  padding-block: 7px;
+  text-align: center;
+}
+.bar a, .bar span {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 30px; font-weight: 700; letter-spacing: .01em;
+}
+.bar svg { width: 15px; height: 15px; }
+.bar a:hover { text-decoration: underline; }
+
 .top {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(255, 255, 255, 0.94);
+  background: #fff;
   border-bottom: 1px solid var(--rule);
 }
-.top .wrap { display: flex; align-items: center; gap: var(--s-3); padding-block: 14px; }
+.top .wrap { display: flex; align-items: center; gap: var(--s-3); padding-block: 12px; }
 .logo { display: flex; align-items: center; min-height: 44px; }
-.logo img { width: auto; height: 30px; }
+.logo img { width: auto; height: 34px; }
 
 .nav { display: none; }
-.top-call { margin-left: auto; }
 
-.menu { position: relative; margin-left: auto; }
+/* the red Call button, which is the old header's one piece of colour */
+.top-call {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 46px; padding: 0 20px;
+  margin-left: auto;
+  background: var(--red-fill); color: #fff;
+  border-radius: var(--radius);
+  font-size: var(--fs-small); font-weight: 700; white-space: nowrap;
+  transition: background-color .18s ease;
+}
+.top-call:hover { background: #ad3028; }
+.top-call svg { width: 17px; height: 17px; }
+.top-call .num { display: none; }
+
+.menu { position: relative; }
 .menu summary {
-  display: flex; align-items: center; gap: 10px;
-  min-height: 44px; padding-inline: 4px;
-  font-size: var(--fs-small); font-weight: 600; color: var(--ink);
+  display: grid; place-items: center;
+  width: 46px; height: 46px;
+  border: 1px solid var(--rule); border-radius: var(--radius);
   cursor: pointer; list-style: none;
 }
 .menu summary::after {
-  content: ""; width: 18px; height: 10px; flex: none;
+  content: ''; width: 18px; height: 12px;
   background:
-    linear-gradient(var(--ink), var(--ink)) 0 0 / 18px 1.5px no-repeat,
-    linear-gradient(var(--ink), var(--ink)) 0 50% / 18px 1.5px no-repeat,
-    linear-gradient(var(--ink), var(--ink)) 0 100% / 18px 1.5px no-repeat;
+    linear-gradient(var(--ink), var(--ink)) 0 0 / 18px 2px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) 0 50% / 18px 2px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) 0 100% / 18px 2px no-repeat;
 }
 .menu[open] summary::after {
-  background:
-    linear-gradient(var(--ink), var(--ink)) 0 50% / 18px 1.5px no-repeat;
+  background: linear-gradient(var(--ink), var(--ink)) 0 50% / 18px 2px no-repeat;
 }
 .menu-panel {
-  position: absolute; right: 0; top: calc(100% + 14px); z-index: 60;
+  position: absolute; right: 0; top: calc(100% + 13px); z-index: 60;
   width: min(280px, calc(100vw - 48px));
   padding: var(--s-2);
-  background: var(--paper); border: 1px solid var(--rule);
+  background: #fff; border: 1px solid var(--rule);
+  box-shadow: 0 10px 30px rgba(20, 22, 26, .08);
 }
 .menu-panel a {
   display: flex; align-items: center; min-height: 48px;
-  font-size: var(--fs-small); color: var(--ink);
+  font-size: var(--fs-small); font-weight: 600; color: var(--ink);
 }
 .menu-panel a + a { border-top: 1px solid var(--rule); }
 
@@ -273,8 +288,8 @@ p { max-width: var(--measure); }
 .facts li { padding-block: var(--s-3); border-bottom: 1px solid var(--rule); }
 .facts b {
   display: block;
-  font-family: var(--font-display); font-weight: 400;
-  font-size: 1.5rem; line-height: 1.2; color: var(--ink);
+  font-weight: 700;
+  font-size: 1.375rem; line-height: 1.2; color: var(--ink);
 }
 .facts span { display: block; margin-top: 2px; font-size: var(--fs-small); color: var(--quiet); }
 
@@ -295,7 +310,7 @@ p { max-width: var(--measure); }
 .repair { display: grid; gap: var(--s-4); align-items: center; }
 .repair img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 .repair .n {
-  font-family: var(--font-display); font-size: 1.125rem; color: var(--red);
+  font-size: 0.9375rem; font-weight: 700; letter-spacing: .08em; color: var(--red-ink);
   display: block; margin-bottom: var(--s-1);
 }
 .repair h3 { margin-bottom: var(--s-2); }
@@ -312,7 +327,7 @@ p { max-width: var(--measure); }
   border-bottom: 1px solid var(--rule);
 }
 .step .n {
-  font-family: var(--font-display); font-size: 1.75rem; line-height: 1;
+  font-size: 1.5rem; font-weight: 700; line-height: 1;
   color: var(--red);
 }
 .step p { margin-top: 6px; font-size: var(--fs-small); }
@@ -334,7 +349,7 @@ p { max-width: var(--measure); }
    ========================================================================== */
 .quotes { display: grid; gap: var(--s-6); }
 .quote p {
-  font-family: var(--font-display); font-style: italic;
+  font-family: var(--font); font-style: normal;
   font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
   line-height: 1.45; color: var(--ink);
   max-width: 34ch;
@@ -363,7 +378,7 @@ p { max-width: var(--measure); }
   position: relative;
   padding: var(--s-4) var(--s-5) var(--s-4) 0;
   min-height: 64px;
-  font-family: var(--font-display); font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  font-size: clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem); font-weight: 700;
   line-height: 1.3; color: var(--ink); cursor: pointer; list-style: none;
 }
 .faq summary::after {
@@ -558,3 +573,17 @@ p { max-width: var(--measure); }
 
 /* The "Home" link above the heading on the legal pages was 19px tall. */
 .tag a { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* The old header's desktop shape: links across the middle, Call on the right. */
+@media (min-width: 1080px) {
+  .nav { display: flex; align-items: center; gap: var(--s-5); margin-inline: auto; }
+  .nav a { font-size: var(--fs-small); font-weight: 600; color: var(--body); padding-block: 12px; }
+  .nav a:hover { color: var(--red-ink); }
+  .top-call { margin-left: 0; }
+  .top-call .num { display: inline; }
+  .top-call .word { display: none; }
+}
+
+/* The phone number in the red bar is a real tap target, so it gets a real
+   tap target. The hours beside it are plain text and stay compact. */
+.bar a { min-height: 44px; }
