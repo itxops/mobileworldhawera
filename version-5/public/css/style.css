@@ -422,10 +422,11 @@ p { max-width: var(--measure); }
 }
 .foot li a:hover { color: var(--paper); }
 
-.foot-find li a, .foot-find li > span { gap: 12px; }
-.f-icon {
+.foot-find li a, .foot-find li > span { gap: 12px; align-items: flex-start; }
+.foot .f-icon {
   display: grid; place-items: center; flex: none;
-  width: 30px; height: 30px;
+  width: 30px; height: 30px; min-height: 0;
+  margin-top: 7px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, .22);
   color: rgba(255, 255, 255, .78);
