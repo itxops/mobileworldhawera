@@ -5,13 +5,13 @@
 # lives under version-5/. It becomes the root workflow in the version 5 repo,
 # which is pushed with:
 #
-#   git subtree push --prefix=version-5 v4 main
+#   git subtree push --prefix=version-5 v5 main
 #
 # If it does nothing on the first run, Pages has not been switched on yet:
 #   Settings -> Pages -> Build and deployment -> Source -> "GitHub Actions"
 #
 # Once enabled the demo is live at
-#   https://itxops.github.io/MWhawera-v5/
+#   https://itxops.github.io/mwh-v5/
 name: Deploy version 5 to GitHub Pages
 
 on:
