@@ -715,3 +715,34 @@ p { max-width: var(--measure); }
    row scrolls. Narrower cards leave the next one half-visible, which is the
    only affordance a scroll row really needs. */
 .gcard { width: min(318px, 82vw); }
+
+/* ==========================================================================
+   20. The "why choose us" section, fixed
+   ========================================================================== */
+
+/* `5fr 7fr` resolved to 152px / 796px, not 435 / 609. An `fr` track will not
+   shrink below the min-content width of what is inside it, and the six reason
+   tiles have a large min-content width — so the right column took what it
+   needed and the photograph was left with the scraps. minmax(0, …) lets the
+   tracks shrink to their share, which is what fr was supposed to do. */
+@media (min-width: 1080px) {
+  .why { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--s-6); }
+
+  /* six tiles across three columns beside a photograph left ~130px of text
+     each. Two columns gives every description a readable measure. */
+  .why .reasons { grid-template-columns: repeat(2, 1fr); gap: var(--s-3); }
+}
+
+/* The icon sat beside the title in a 46px + 1fr grid, which squeezed both the
+   heading and the description into 122px. Icon on its own line above. */
+.reason {
+  display: block;
+  padding: var(--s-3);
+}
+.reason .ico { margin-bottom: var(--s-3); }
+.reason h3 { margin-bottom: var(--s-1); }
+.reason p { max-width: none; }
+
+/* the photograph should fill the column it is given */
+.why-shot picture { display: block; width: 100%; }
+.why-shot img { width: 100%; height: auto; }
