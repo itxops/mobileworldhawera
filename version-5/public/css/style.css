@@ -466,12 +466,6 @@ p { max-width: var(--measure); }
 @media (min-width: 1080px) {
   :root { --gutter: 48px; --section: 136px; }
 
-  .menu { display: none; }
-  .nav { display: flex; align-items: center; gap: var(--s-5); margin-left: auto; }
-  .nav a { font-size: var(--fs-small); color: var(--body); padding-block: 12px; }
-  .nav a:hover { color: var(--ink); }
-  .top-call { margin-left: var(--s-5); }
-
   .hero { padding-block: var(--s-7) var(--s-8); }
   .hero .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-7); align-items: center; }
   .hero-shot img { aspect-ratio: 3 / 4; }
@@ -483,6 +477,22 @@ p { max-width: var(--measure); }
   .why { display: grid; grid-template-columns: 5fr 7fr; gap: var(--s-7); align-items: start; }
   .map iframe { height: 460px; }
   .foot-grid { grid-template-columns: 2fr 1fr 1fr 1.4fr; }
+}
+
+/* ==========================================================================
+   15b. Desktop nav — its own breakpoint, later than the grid layouts above.
+        At 1080-1179px there is room for the wider grids but not for six nav
+        words in one row without wrapping ("How it works" / "Why us" broke
+        onto two lines) -- the hamburger menu now covers that gap instead.
+   ========================================================================== */
+@media (min-width: 1180px) {
+  .menu { display: none; }
+  .nav { display: flex; align-items: center; gap: var(--s-5); margin-inline: auto; }
+  .nav a { font-size: var(--fs-small); font-weight: 600; color: var(--body); padding-block: 12px; white-space: nowrap; }
+  .nav a:hover { color: var(--red-ink); }
+  .top-call { margin-left: 0; }
+  .top-call .num { display: inline; }
+  .top-call .word { display: none; }
 }
 
 /* ==========================================================================
@@ -565,15 +575,8 @@ p { max-width: var(--measure); }
 /* The "Home" link above the heading on the legal pages was 19px tall. */
 .tag a { display: inline-flex; align-items: center; min-height: 44px; }
 
-/* The old header's desktop shape: links across the middle, Call on the right. */
-@media (min-width: 1080px) {
-  .nav { display: flex; align-items: center; gap: var(--s-5); margin-inline: auto; }
-  .nav a { font-size: var(--fs-small); font-weight: 600; color: var(--body); padding-block: 12px; }
-  .nav a:hover { color: var(--red-ink); }
-  .top-call { margin-left: 0; }
-  .top-call .num { display: inline; }
-  .top-call .word { display: none; }
-}
+/* The old header's desktop shape: links across the middle, Call on the right.
+   Moved into the shared 1180px nav breakpoint above -- see section 15b. */
 
 /* The phone number in the red bar is a real tap target, so it gets a real
    tap target. The hours beside it are plain text and stay compact. */
