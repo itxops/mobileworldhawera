@@ -7,9 +7,10 @@
        /            a chooser page
        /compare     two versions side by side, switchable, at a width you can drag
        /v1/         version 1  (public/)
-       /v2/         version 2  (version-2/public/)
+       /^/(v1|v2|v3|v4|v5)(/         version 2  (version-2/public/)|v2|v3|v4|v5)/         version 2  (version-2/public/)
        /v3/         version 3  (version-3/public/)
        /v4/         version 4  (version-4/public/)
+       /v5/         version 5  (version-5/public/)
 
    Uses only Node's own modules — nothing to install, and it never touches the
    network. This is a preview tool for the desktop; it is not what gets
@@ -28,6 +29,7 @@ const ROOTS = {
   v2: path.join(ROOT, 'version-2', 'public'),
   v3: path.join(ROOT, 'version-3', 'public'),
   v4: path.join(ROOT, 'version-4', 'public'),
+  v5: path.join(ROOT, 'version-5', 'public'),
 };
 
 const TYPES = {
@@ -244,7 +246,7 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/') return send(res, 200, TYPES['.html'], indexPage());
   if (pathname === '/compare') return send(res, 200, TYPES['.html'], comparePage());
 
-  const m = pathname.match(/^\/(v1|v2|v3|v4)(\/.*)?$/);
+  const m = pathname.match(/^\/(v1|v2|v3|v4|v5)(\/.*)?$/);
   if (!m) return send(res, 404, 'text/plain', 'Not found. Try / or /compare');
 
   const base = ROOTS[m[1]];
