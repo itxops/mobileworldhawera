@@ -746,3 +746,60 @@ p { max-width: var(--measure); }
 /* the photograph should fill the column it is given */
 .why-shot picture { display: block; width: 100%; }
 .why-shot img { width: 100%; height: auto; }
+
+/* ==========================================================================
+   21. "Why choose us" — the version 4 treatment, at the owner's request
+       Measured off https://itxops.github.io/MWhawera-v3 : soft grey band,
+       centred head, three columns of white rounded cards with a 20px gap,
+       each carrying a 52px gradient tile with a white glyph.
+       The type stays Arial — only the section's look is ported.
+   ========================================================================== */
+:root {
+  --g-red:    linear-gradient(135deg, #F0564C, #C9302A);
+  --g-indigo: linear-gradient(135deg, #5A7BF0, #3547BC);
+  --g-amber:  linear-gradient(135deg, #F7A63B, #DD7226);
+  --g-teal:   linear-gradient(135deg, #2DB3A6, #0E8680);
+  --g-violet: linear-gradient(135deg, #9B6AE8, #6A3DBD);
+  --g-green:  linear-gradient(135deg, #43BF77, #1B8E51);
+  --card-line: #E2E8F0;
+}
+
+#why { background: #F8FAFC; }
+#why .why { display: block; }          /* the photo column is gone */
+
+.reasons { display: grid; grid-template-columns: 1fr; gap: 20px; }
+
+.reason {
+  display: block;
+  padding: 22px 20px;
+  background: #fff;
+  border: 1px solid var(--card-line);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(26, 34, 56, .06);
+}
+.reason h3 { margin-bottom: 6px; }
+.reason p { font-size: var(--fs-small); color: var(--quiet); max-width: none; }
+
+/* the icon square becomes a gradient tile with a white glyph */
+.reason .ico {
+  width: 52px; height: 52px;
+  margin-bottom: 18px;
+  border: 0;
+  border-radius: 16px;
+  color: #fff;
+  background: var(--g-red);
+}
+.reason .ico svg { width: 24px; height: 24px; }
+
+/* one colour per card, in the reference's order */
+.reason:nth-child(1) .ico { background: var(--g-red); }
+.reason:nth-child(2) .ico { background: var(--g-indigo); }
+.reason:nth-child(3) .ico { background: var(--g-amber); }
+.reason:nth-child(4) .ico { background: var(--g-teal); }
+.reason:nth-child(5) .ico { background: var(--g-violet); }
+.reason:nth-child(6) .ico { background: var(--g-green); }
+
+@media (min-width: 720px) { .reasons { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1080px) {
+  .reasons, .why .reasons { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
