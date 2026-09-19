@@ -16,7 +16,7 @@ photograph is a separate matter, so that check is done by eye.
 | `services/screen` | 16658250 | https://www.pexels.com/photo/16658250/ | yes |
 | `services/water` | 8481934 | https://www.pexels.com/photo/8481934/ | yes |
 | `services/battery` | 37475677 | https://www.pexels.com/photo/37475677/ | yes |
-| `services/audio` | 9242903 | https://www.pexels.com/photo/9242903/ | yes |
+| `services/audio` | 32932370 | https://www.pexels.com/photo/32932370/ | yes (replaced again) |
 | `services/signal` | 33299583 | https://www.pexels.com/photo/33299583/ | yes |
 | `services/software` | 6373187 | https://www.pexels.com/photo/6373187/ | yes |
 | `accessories/headphones` | 210927 | https://www.pexels.com/photo/210927/ | yes |

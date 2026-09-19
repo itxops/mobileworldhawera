@@ -316,35 +316,11 @@ p { max-width: var(--measure); }
 .devices p { margin-top: 6px; font-size: var(--fs-small); color: var(--quiet); }
 
 /* ==========================================================================
-   7. Repairs — alternating rows, photograph one side, words the other.
-      This is the reference's one structural idea and it is the reason the
-      section does not read as a grid of boxes.
+   7. Repairs and 8. How it works — both replaced with ported designs.
+      See sections 22 (repairs, from v4) and 23 (how it works, from v1) near
+      the end of this file. Their original alternating-row / numbered-line
+      CSS lived here and is gone with them.
    ========================================================================== */
-.repairs { display: grid; gap: var(--s-7); }
-.repair { display: grid; gap: var(--s-4); align-items: center; }
-.repair img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
-.repair .n {
-  font-size: 0.9375rem; font-weight: 700; letter-spacing: .08em; color: var(--red-ink);
-  display: block; margin-bottom: var(--s-1);
-}
-.repair h3 { margin-bottom: var(--s-2); }
-.repair p { color: var(--body); }
-
-/* ==========================================================================
-   8. Steps and reasons — numbered lines and plain lines. Still no boxes.
-   ========================================================================== */
-.steps { display: grid; gap: 0; border-top: 1px solid var(--rule); }
-.step {
-  display: grid; grid-template-columns: 56px 1fr;
-  gap: var(--s-3);
-  padding-block: var(--s-4);
-  border-bottom: 1px solid var(--rule);
-}
-.step .n {
-  font-size: 1.5rem; font-weight: 700; line-height: 1;
-  color: var(--red);
-}
-.step p { margin-top: 6px; font-size: var(--fs-small); }
 
 .reasons { display: grid; gap: var(--s-5); }
 .reason h3 { margin-bottom: var(--s-1); }
@@ -469,9 +445,6 @@ p { max-width: var(--measure); }
   .reasons { grid-template-columns: repeat(2, 1fr); gap: var(--s-6) var(--s-5); }
   .quotes { grid-template-columns: repeat(2, 1fr); }
   .visit { grid-template-columns: 1fr 1fr; gap: var(--s-6); align-items: start; }
-
-  .repair { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
-  .repair:nth-child(even) .repair-shot { order: 2; }
 }
 
 /* ==========================================================================
@@ -490,7 +463,6 @@ p { max-width: var(--measure); }
   .hero .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-7); align-items: center; }
   .hero-shot img { aspect-ratio: 3 / 4; }
 
-  .repair { gap: var(--s-8); }
   .acc { grid-template-columns: repeat(5, 1fr); }
   .reasons { grid-template-columns: repeat(3, 1fr); }
   .quotes { grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
@@ -542,10 +514,6 @@ p { max-width: var(--measure); }
   .devices { gap: var(--s-4); }
   .devices img { aspect-ratio: 16 / 10; }
 
-  .repairs { gap: var(--s-6); }
-  .repair { gap: var(--s-3); }
-  .repair img { aspect-ratio: 16 / 10; }
-
   .why { display: grid; gap: var(--s-5); }
   .why-shot img { aspect-ratio: 4 / 3; }
   .reasons { gap: var(--s-4); }
@@ -556,8 +524,6 @@ p { max-width: var(--measure); }
   .acc { grid-template-columns: 1fr 1fr; gap: var(--s-3) var(--s-3); }
   .acc h3 { font-size: 1rem; }
 
-  .steps { gap: 0; }
-  .step { padding-block: var(--s-3); }
 
   .close { padding-block: var(--s-6); }
 }
@@ -583,8 +549,6 @@ p { max-width: var(--measure); }
 /* The repair numerals are 18px — ordinary text size — so they need 4.5:1, and
    --red is only 4.09:1 on paper. The larger step numerals (28px) clear the
    3:1 large-text bar on --red and keep it. */
-.repair .n { color: var(--red-ink); }
-
 /* The "Home" link above the heading on the legal pages was 19px tall. */
 .tag a { display: inline-flex; align-items: center; min-height: 44px; }
 
@@ -622,9 +586,6 @@ p { max-width: var(--measure); }
 .devices p, .acc p { padding-bottom: var(--s-3); }
 .acc h3 { padding-top: var(--s-2); }
 
-.repair { padding-bottom: var(--s-6); border-bottom: 1px solid var(--rule); }
-.repairs > .repair:last-child { border-bottom: 0; padding-bottom: 0; }
-
 .reason {
   padding: var(--s-3);
   border: 1px solid var(--rule);
@@ -644,15 +605,6 @@ p { max-width: var(--measure); }
 }
 .ico svg { width: 22px; height: 22px; }
 
-.reason { display: grid; grid-template-columns: 46px 1fr; gap: var(--s-3); align-items: start; }
-.reason .ico { grid-row: span 2; }
-.reason h3 { margin-bottom: 4px; }
-
-.repair .rhead { display: flex; align-items: center; gap: var(--s-2); margin-bottom: var(--s-2); }
-.repair .rhead h3 { margin: 0; }
-
-.step { grid-template-columns: 46px 1fr; align-items: start; }
-.step .ico { grid-row: span 2; }
 
 /* --- brands --------------------------------------------------------------
    Back at the owner's request. Monochrome, never in manufacturer colours,
@@ -803,3 +755,203 @@ p { max-width: var(--measure); }
 @media (min-width: 1080px) {
   .reasons, .why .reasons { grid-template-columns: repeat(3, 1fr); gap: 20px; }
 }
+
+/* ==========================================================================
+   22. Repairs — the version 4 card treatment, ported. Font stays Arial.
+       Measured off https://itxops.github.io/MWhawera-v3 : white 20px-radius
+       cards, a photo on top, a 52px gradient tile overlapping its bottom-left
+       corner, then the title, description and a red "Ask for a quote" link.
+   ========================================================================== */
+#repairs { background: #F8FAFC; }
+
+.rep-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+.rep-card {
+  display: flex; flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--card-line);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(26, 34, 56, .06);
+  overflow: hidden;
+}
+.rep-shot { position: relative; }
+.rep-shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.rep-tile {
+  position: absolute; left: 18px; bottom: -22px;
+  display: grid; place-items: center;
+  width: 52px; height: 52px;
+  border-radius: 16px;
+  color: #fff;
+}
+.rep-tile svg { width: 24px; height: 24px; }
+.rep-body { padding: 34px 20px 14px; }
+.rep-body h3 { margin-bottom: 8px; }
+.rep-body p { font-size: var(--fs-small); color: var(--quiet); margin-bottom: 16px; }
+.rep-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 44px;
+  font-size: var(--fs-small); font-weight: 700; color: var(--red-ink);
+}
+.rep-link svg { width: 15px; height: 15px; }
+.rep-link:hover { text-decoration: underline; }
+
+/* one colour per card, same six gradients used in "why choose us" */
+.rep-card:nth-child(6n+1) .rep-tile { background: var(--g-red); }
+.rep-card:nth-child(6n+2) .rep-tile { background: var(--g-indigo); }
+.rep-card:nth-child(6n+3) .rep-tile { background: var(--g-amber); }
+.rep-card:nth-child(6n+4) .rep-tile { background: var(--g-teal); }
+.rep-card:nth-child(6n+5) .rep-tile { background: var(--g-violet); }
+.rep-card:nth-child(6n+6) .rep-tile { background: var(--g-green); }
+
+@media (min-width: 720px) { .rep-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1080px) { .rep-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* ==========================================================================
+   23. How it works — the version 1 treatment, on white instead of black.
+       Cards with a hairline border, a red-gradient numeral badge, and a large
+       faint ghost numeral behind it. The connecting line between cards only
+       appears once they sit in one row, at 1080px.
+   ========================================================================== */
+#how { background: #fff; }
+
+.pill-tag {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 7px 15px 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(221, 49, 45, .28);
+  background: rgba(221, 49, 45, .08);
+  font-size: .82rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--red-ink);
+}
+.pill-tag::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: currentColor; flex: none;
+  box-shadow: 0 0 0 3px rgba(221, 49, 45, .16);
+}
+
+.hiw-grid { display: grid; gap: 18px; }
+.hiw-step {
+  position: relative;
+  padding: 32px 25px 28px;
+  border-radius: 20px;
+  border: 1px solid var(--rule);
+  background: #fff;
+  overflow: hidden;
+}
+.hiw-step::after {
+  content: attr(data-num);
+  position: absolute; right: 12px; top: 4px;
+  font-size: 4.5rem; font-weight: 900; line-height: 1; letter-spacing: -.05em;
+  color: var(--ink); opacity: .05; pointer-events: none;
+}
+.hiw-num {
+  display: inline-grid; place-items: center;
+  width: 46px; height: 46px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #dd312d 0%, #c8271f 55%, #b81e1b 100%);
+  color: #fff; font-weight: 800; font-size: 1.05rem; letter-spacing: -.02em;
+  box-shadow: 0 8px 20px -8px rgba(221, 49, 45, .38);
+}
+.hiw-step h3 { margin-bottom: 6px; }
+.hiw-step p { font-size: var(--fs-small); color: var(--quiet); position: relative; }
+
+@media (min-width: 720px) { .hiw-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1080px) {
+  .hiw-grid { grid-template-columns: repeat(4, 1fr); position: relative; }
+  .hiw-grid::before {
+    content: ''; position: absolute; top: 3.25rem; left: 12%; right: 12%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rule), transparent);
+  }
+}
+
+/* ==========================================================================
+   24. The shared sliding-marquee mechanism — used by both the brand row and
+       the reviews. Two identical halves translate -50%, which lands exactly
+       on the seam, so the loop is invisible. The second half is marked
+       data-clone and hidden from screen readers.
+   ========================================================================== */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee-track {
+  display: flex; flex-wrap: nowrap; align-items: stretch;
+  width: max-content;
+  animation: mw-slide var(--mq, 40s) linear infinite;
+}
+@keyframes mw-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto; -webkit-mask-image: none; mask-image: none;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+  }
+  .marquee-track { animation: none !important; transform: none !important; padding-inline: var(--gutter); }
+  .marquee-track > * { scroll-snap-align: start; }
+  .marquee-track > [data-clone] { display: none; }
+}
+
+/* ==========================================================================
+   25. Brands — the version 1 treatment (a sliding chip row), recoloured
+       white to match the rest of the page. Font stays Arial.
+   ========================================================================== */
+.brands-band { padding-block: 40px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.brands-band .pill-tag { display: flex; margin-inline: auto; width: max-content; margin-bottom: 28px; }
+.brand-marquee .marquee-track { --mq: 34s; gap: 0; }
+.brand-chip {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  min-width: 160px; min-height: 70px; flex: none;
+  padding: 14px 26px;
+  margin-right: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+  background: #fff;
+  font-size: 1.05rem; font-weight: 700; letter-spacing: .01em; color: var(--ink);
+}
+.brand-chip svg { width: 22px; height: 22px; opacity: .82; }
+.brands-band .note { margin: 28px auto 0; text-align: center; }
+
+/* ==========================================================================
+   26. Reviews — the version 4 marquee treatment, recoloured to match this
+       page's tokens. Font stays Arial.
+   ========================================================================== */
+#reviews { background: #F8FAFC; }
+.review-marquee { --mq: 78s; padding-block: 4px 22px; }
+.review-marquee .marquee-track { gap: 0; }
+.rev-card {
+  width: 300px; flex: none;
+  display: flex; flex-direction: column;
+  padding: 22px;
+  margin-right: 18px;
+  background: #fff;
+  border: 1px solid var(--card-line);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(26, 34, 56, .06);
+}
+.rev-card .stars { display: flex; gap: 2px; color: #E8A317; margin-bottom: 12px; }
+.rev-card .stars svg { width: 16px; height: 16px; }
+.rev-card p { font-size: var(--fs-small); color: var(--body); max-width: none; }
+.rev-foot { display: flex; align-items: center; gap: 11px; margin-top: 16px; }
+.rev-avatar {
+  display: grid; place-items: center;
+  width: 40px; height: 40px; flex: none;
+  border-radius: 50%; color: #fff;
+  background: var(--g-red);
+  font-weight: 700;
+}
+.rev-foot cite { font-style: normal; }
+.rev-foot b { display: block; font-size: var(--fs-small); font-weight: 700; color: var(--ink); }
+.rev-foot span { display: block; font-size: .8125rem; color: var(--quiet); }
+
+@media (min-width: 720px) { .brand-chip { min-width: 176px; } }
